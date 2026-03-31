@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Halit Automation — AI & Otomasyon Ajansı</title>
+  <meta name="description" content="İşletmeniz için yapay zeka destekli otomasyon çözümleri. n8n workflow, WhatsApp bot, AI entegrasyon ve satış otomasyonu." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0a0e1a;
+      --navy2: #0f1525;
+      --navy3: #141c30;
+      --gold: #c9a84c;
+      --gold2: #e8c96a;
+      --gold-glow: rgba(201,168,76,0.12);
+      --gold-border: rgba(201,168,76,0.25);
+      --text: #e8e8f0;
+      --text2: #8a8a9e;
+      --text3: #4a4a60;
+      --border: rgba(255,255,255,0.06);
+      --card: rgba(255,255,255,0.025);
+      --card2: rgba(255,255,255,0.045);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--text); overflow-x: hidden; }
+    ::selection { background: rgba(201,168,76,0.25); }
+
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 28px; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      padding: 20px 0;
+      background: rgba(10,14,26,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--gold), var(--gold2)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 900; color: var(--navy); }
+    .logo-text { font-size: 1.1rem; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
+    .logo-text span { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 0.85rem; color: var(--text2); text-decoration: none; transition: color 0.2s; font-weight: 500; }
+    .nav-links a:hover { color: var(--text); }
+    .btn-nav {
+      padding: 9px 22px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-nav:hover { opacity: 0.9; box-shadow: 0 4px 20px rgba(201,168,76,0.35); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 96px 0 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; text-align: center; max-width: 780px; margin: 0 auto; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid var(--gold-border);
+      color: var(--gold);
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 100px;
+      margin-bottom: 28px;
+    }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
+
+    h1 {
+      font-size: clamp(2.6rem, 5vw, 4.2rem);
+      font-weight: 900;
+      line-height: 1.06;
+      letter-spacing: -0.04em;
+      margin-bottom: 22px;
+    }
+    h1 em { font-style: normal; color: var(--gold); }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text2);
+      line-height: 1.8;
+      margin-bottom: 40px;
+      max-width: 580px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-btns { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 60px; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 15px 32px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy);
+      border-radius: 10px;
+      font-size: 1rem; font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover { box-shadow: 0 8px 32px rgba(201,168,76,0.4); transform: translateY(-2px); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 15px 28px;
+      background: transparent;
+      color: var(--text2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem; font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+
+    /* stats strip */
+    .stats-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .stat {
+      background: var(--navy2);
+      padding: 24px 20px;
+      text-align: center;
+    }
+    .stat-num { font-size: 2rem; font-weight: 900; letter-spacing: -0.04em; color: var(--gold); line-height: 1; }
+    .stat-label { font-size: 0.75rem; color: var(--text2); margin-top: 6px; }
+
+    /* ── SECTIONS ── */
+    .sec { padding: 96px 0; }
+    .sec-alt { background: var(--navy2); }
+    .sec-label { display: block; color: var(--gold); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+    .sec-title { font-size: clamp(1.9rem, 3.5vw, 2.8rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 16px; }
+    .sec-title em { font-style: normal; color: var(--gold); }
+    .sec-sub { color: var(--text2); font-size: 0.97rem; line-height: 1.8; max-width: 540px; }
+    .sec-head { margin-bottom: 56px; }
+    .center { text-align: center; }
+    .center .sec-sub { margin: 0 auto; }
+    .divider { width: 48px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); border-radius: 2px; margin: 16px 0; }
+    .center .divider { margin: 16px auto; }
+
+    /* ── HİZMETLER ── */
+    .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .service-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .service-card:hover { border-color: var(--gold-border); background: var(--card2); transform: translateY(-4px); }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon {
+      width: 52px; height: 52px;
+      background: var(--gold-glow);
+      border: 1px solid var(--gold-border);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+    .service-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+    .service-card p { font-size: 0.85rem; color: var(--text2); line-height: 1.7; margin-bottom: 16px; }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 0.7rem; font-weight: 600;
+      padding: 4px 10px;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid var(--gold-border);
+      color: var(--gold);
+      border-radius: 100px;
+    }
+
+    /* ── SÜREÇ ── */
+    .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .process-step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 22px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .process-step:hover { border-color: var(--gold-border); transform: translateY(-3px); }
+    .step-num {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 900;
+      margin: 0 auto 16px;
+    }
+    .process-step h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .process-step p { font-size: 0.8rem; color: var(--text2); line-height: 1.65; }
+
+    /* ── ÜRÜN ── */
+    .product-card {
+      background: var(--card);
+      border: 1px solid var(--gold-border);
+      border-radius: 20px;
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-card::before {
+      content: '';
+      position: absolute; top: -100px; right: -100px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(201,168,76,0.08), transparent 70%);
+      pointer-events: none;
+    }
+    .product-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy);
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .product-card h3 { font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 12px; }
+    .product-card h3 span { color: var(--gold); }
+    .product-card p { font-size: 0.92rem; color: var(--text2); line-height: 1.8; margin-bottom: 24px; }
+    .product-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .pf-item { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; }
+    .pf-check { width: 20px; height: 20px; background: var(--gold-glow); border: 1px solid var(--gold-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gold); font-size: 0.65rem; font-weight: 700; }
+    .product-visual {
+      background: var(--navy3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .pv-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .pv-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .pv-title { font-size: 0.8rem; font-weight: 700; }
+    .pv-msg { padding: 10px 14px; border-radius: 10px; font-size: 0.78rem; line-height: 1.5; margin-bottom: 8px; }
+    .pv-msg.in { background: var(--navy2); color: var(--text2); border-bottom-left-radius: 3px; }
+    .pv-msg.out { background: linear-gradient(135deg, var(--gold), var(--gold2)); color: var(--navy); font-weight: 600; border-bottom-right-radius: 3px; margin-left: 20%; }
+    .pv-tag { font-size: 0.65rem; color: var(--text3); margin: 0 4px 8px; }
+    .pv-tag.right { text-align: right; }
+
+    /* ── TESTİMONİALLER ── */
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .testi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.3s;
+    }
+    .testi-card:hover { border-color: var(--gold-border); }
+    .stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 14px; letter-spacing: 2px; }
+    .testi-text { font-size: 0.88rem; color: var(--text2); line-height: 1.75; margin-bottom: 20px; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-av {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 700; color: var(--navy);
+      flex-shrink: 0;
+    }
+    .testi-name { font-size: 0.88rem; font-weight: 700; }
+    .testi-role { font-size: 0.75rem; color: var(--text2); }
+
+    /* ── HAKKIMIZDA ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .about-img {
+      background: var(--navy3);
+      border: 1px solid var(--gold-border);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+    }
+    .about-avatar {
+      width: 100px; height: 100px; border-radius: 20px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem; font-weight: 900; color: var(--navy);
+      margin: 0 auto 20px;
+    }
+    .about-name { font-size: 1.4rem; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 6px; }
+    .about-title { font-size: 0.85rem; color: var(--gold); font-weight: 600; margin-bottom: 20px; }
+    .about-socials { display: flex; justify-content: center; gap: 10px; }
+    .social-btn {
+      padding: 8px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.75rem; color: var(--text2);
+      text-decoration: none;
+      transition: all 0.2s;
+      font-weight: 600;
+    }
+    .social-btn:hover { border-color: var(--gold-border); color: var(--gold); }
+    .about-content h2 { font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 16px; }
+    .about-content h2 em { font-style: normal; color: var(--gold); }
+    .about-content p { font-size: 0.92rem; color: var(--text2); line-height: 1.85; margin-bottom: 16px; }
+    .about-skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .skill { padding: 6px 14px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; font-size: 0.78rem; color: var(--text2); font-weight: 500; }
+
+    /* ── İLETİŞİM ── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .contact-info h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 12px; }
+    .contact-info p { font-size: 0.9rem; color: var(--text2); line-height: 1.8; margin-bottom: 28px; }
+    .contact-items { display: flex; flex-direction: column; gap: 14px; }
+    .contact-item { display: flex; align-items: center; gap: 14px; }
+    .ci-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--gold-glow); border: 1px solid var(--gold-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .ci-label { font-size: 0.72rem; color: var(--text2); margin-bottom: 2px; }
+    .ci-value { font-size: 0.9rem; font-weight: 600; }
+    .contact-form { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text2); margin-bottom: 8px; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      background: var(--navy3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--gold-border); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-group select option { background: var(--navy2); }
+    .btn-form {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy);
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem; font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-form:hover { opacity: 0.9; box-shadow: 0 6px 24px rgba(201,168,76,0.35); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy2);
+      border-top: 1px solid var(--border);
+      padding: 48px 0 32px;
+    }
+    .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
+    .footer-brand p { font-size: 0.85rem; color: var(--text2); line-height: 1.75; margin-top: 12px; max-width: 280px; }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 16px; color: var(--gold); }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a { font-size: 0.82rem; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--text); }
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; }
+    .footer-bottom p { font-size: 0.78rem; color: var(--text3); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+      .services-grid, .testi-grid, .about-grid, .contact-grid, .footer-inner { grid-template-columns: 1fr; }
+      .process-grid { grid-template-columns: repeat(2, 1fr); }
+      .product-card { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">H</div>
+        <div class="logo-text">Halit <span>Automation</span></div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#hizmetler">Hizmetler</a></li>
+        <li><a href="#surec">Süreç</a></li>
+        <li><a href="#urun">Ürün</a></li>
+        <li><a href="#hakkimizda">Hakkımızda</a></li>
+        <li><a href="#iletisim">İletişim</a></li>
+      </ul>
+      <a href="#iletisim" class="btn-nav">Ücretsiz Danışma</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-badge">AI & Otomasyon Ajansı — Türkiye</div>
+        <h1>İşletmenizi <em>Yapay Zeka</em> ile Büyütün</h1>
+        <p class="hero-sub">Tekrarlayan işleri otomatize eder, satışlarınızı artırır, müşterilerinize 7/24 hizmet veririz. n8n, WhatsApp, AI entegrasyon ve daha fazlası.</p>
+        <div class="hero-btns">
+          <a href="#iletisim" class="btn-primary">Ücretsiz Danışma Al →</a>
+          <a href="#hizmetler" class="btn-secondary">Hizmetleri Gör</a>
+        </div>
+        <div class="stats-strip">
+          <div class="stat">
+            <div class="stat-num">50+</div>
+            <div class="stat-label">Tamamlanan Proje</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">%90</div>
+            <div class="stat-label">Zaman Tasarrufu</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">7/24</div>
+            <div class="stat-label">AI Destekli Hizmet</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">100+</div>
+            <div class="stat-label">API Entegrasyonu</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HİZMETLER -->
+  <section class="sec sec-alt" id="hizmetler">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-label">Hizmetlerimiz</span>
+        <h2 class="sec-title">İşletmeniz için <em>Özel Çözümler</em></h2>
+        <div class="divider"></div>
+        <p class="sec-sub">Her işletmenin ihtiyacı farklıdır. Size özel otomasyon çözümleri tasarlayıp hayata geçiriyoruz.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">⚙️</div>
+          <h3>Workflow Otomasyonu</h3>
+          <p>n8n ile iş süreçlerinizi otomatize edin. Fatura, sipariş, bildirim, raporlama — hepsi otomatik.</p>
+          <div class="service-tags">
+            <span class="tag">n8n</span>
+            <span class="tag">Make</span>
+            <span class="tag">Zapier</span>
+            <span class="tag">API</span>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">💬</div>
+          <h3>WhatsApp & Chatbot</h3>
+          <p>Müşteri mesajlarına 7/24 otomatik yanıt. Randevu alma, sipariş takibi, müşteri desteği tamamen otomatik.</p>
+          <div class="service-tags">
+            <span class="tag">WhatsApp</span>
+            <span class="tag">Telegram</span>
+            <span class="tag">AI Bot</span>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🤖</div>
+          <h3>AI Entegrasyonu</h3>
+          <p>ChatGPT, Claude, Gemini gibi yapay zeka modellerini iş süreçlerinize entegre edin. İçerik üretimi, analiz, kararlar.</p>
+          <div class="service-tags">
+            <span class="tag">Claude</span>
+            <span class="tag">GPT-4o</span>
+            <span class="tag">Gemini</span>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📈</div>
+          <h3>Satış & CRM Otomasyonu</h3>
+          <p>Lead toplama, müşteri takibi, teklif gönderme, satış pipeline yönetimi. Satış ekibiniz daha az işle daha çok satar.</p>
+          <div class="service-tags">
+            <span class="tag">CRM</span>
+            <span class="tag">Email</span>
+            <span class="tag">Lead Gen</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SÜREÇ -->
+  <section class="sec" id="surec">
+    <div class="container">
+      <div class="sec-head center">
+        <span class="sec-label">Nasıl Çalışır</span>
+        <h2 class="sec-title">4 Adımda <em>Otomasyon</em></h2>
+        <div class="divider"></div>
+        <p class="sec-sub">Karmaşık süreçleri basit 4 adıma indirgedik. İlk sonuçları 1 haftada görürsünüz.</p>
+      </div>
+      <div class="process-grid">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <h3>Keşif & Analiz</h3>
+          <p>İş süreçlerinizi, sorunlarınızı ve hedeflerinizi birlikte analiz ediyoruz.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <h3>Çözüm Tasarımı</h3>
+          <p>Size özel otomasyon mimarisi tasarlıyoruz. Hangi araçlar, nasıl entegre olacak.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <h3>Geliştirme & Test</h3>
+          <p>Sistemi kuruyoruz, test ediyoruz, hataları düzeltiyoruz. Canlıya hazır hale getiriyoruz.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">4</div>
+          <h3>Destek & Optimizasyon</h3>
+          <p>Canlıya geçtikten sonra da yanınızdayız. Sürekli izleme ve iyileştirme.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÜRÜN: HALFLOW -->
+  <section class="sec sec-alt" id="urun">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-label">Kendi Ürünümüz</span>
+        <h2 class="sec-title">Tanışın: <em>Halflow</em></h2>
+        <div class="divider"></div>
+        <p class="sec-sub">Küçük işletmeler için geliştirdiğimiz hazır AI dijital sekreter çözümü.</p>
+      </div>
+      <div class="product-card">
+        <div class="product-content">
+          <span class="product-badge">Hazır Ürün</span>
+          <h3><span>Halflow</span> — 7/24 Dijital Sekreter</h3>
+          <p>WhatsApp mesajlarınıza AI ile anında yanıt verin. Randevu alın, sık sorulan soruları otomatik cevaplayın, kritik mesajlar için anında uyarı alın.</p>
+          <div class="product-features">
+            <div class="pf-item"><span class="pf-check">✓</span> 7/24 otomatik WhatsApp yanıtı</div>
+            <div class="pf-item"><span class="pf-check">✓</span> AI ile mesaj sınıflandırma</div>
+            <div class="pf-item"><span class="pf-check">✓</span> Randevu yönetimi</div>
+            <div class="pf-item"><span class="pf-check">✓</span> Kritik mesaj anında uyarı</div>
+            <div class="pf-item"><span class="pf-check">✓</span> 1 günde kurulum</div>
+          </div>
+          <a href="https://halflow.info" target="_blank" class="btn-primary" style="display:inline-flex;">Halflow'u İncele →</a>
+        </div>
+        <div class="product-visual">
+          <div class="pv-header">
+            <div class="pv-dot" style="background:#22c55e"></div>
+            <span class="pv-title">Halflow Asistan — Çevrimiçi</span>
+          </div>
+          <div class="pv-msg in">Merhaba, yarın saat 14:00 için randevu alabilir miyim?</div>
+          <div class="pv-tag">Müşteri • 14:23</div>
+          <div class="pv-msg out">Merhaba! 14:00 müsait. Randevunuzu oluşturdum, onay SMS'i gönderildi. ✅</div>
+          <div class="pv-tag right">Halflow • 14:23 • Otomatik</div>
+          <div class="pv-msg in">Teşekkürler, çok hızlı!</div>
+          <div class="pv-tag">Müşteri • 14:24</div>
+          <div class="pv-msg out">Rica ederiz! Randevunuzu iptal veya değiştirmek isterseniz buradayım 😊</div>
+          <div class="pv-tag right">Halflow • 14:24 • Otomatik</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTİMONİALLER -->
+  <section class="sec" id="gorusler">
+    <div class="container">
+      <div class="sec-head center">
+        <span class="sec-label">Müşteri Görüşleri</span>
+        <h2 class="sec-title">Müşterilerimiz <em>Ne Diyor?</em></h2>
+        <div class="divider"></div>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p class="testi-text">"WhatsApp botunu kurduktan sonra hafta sonu mesajlarının %100'üne anında yanıt veriliyor. Artık Pazartesi sabahı 20 cevapsız mesajla başlamıyorum."</p>
+          <div class="testi-author">
+            <div class="testi-av">A</div>
+            <div>
+              <div class="testi-name">Ayşe Kaya</div>
+              <div class="testi-role">Güzellik Salonu Sahibi, Antalya</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p class="testi-text">"Randevu sistemimiz, fatura otomasyonu ve müşteri takibi artık tamamen otomatik. Ekibim asıl işe odaklanıyor. Harika bir yatırım."</p>
+          <div class="testi-author">
+            <div class="testi-av">M</div>
+            <div>
+              <div class="testi-name">Mehmet Arslan</div>
+              <div class="testi-role">Klinik Müdürü, İstanbul</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p class="testi-text">"Lead toplama sistemini kurduk, şimdi her gün 20-30 yeni potansiyel müşteri geliyor. Satışlarımız 3 ayda %60 arttı."</p>
+          <div class="testi-author">
+            <div class="testi-av">S</div>
+            <div>
+              <div class="testi-name">Selin Demir</div>
+              <div class="testi-role">E-ticaret Girişimcisi, İzmir</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HAKKIMIZDA -->
+  <section class="sec sec-alt" id="hakkimizda">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img">
+          <div class="about-avatar">H</div>
+          <div class="about-name">Halit Cerben</div>
+          <div class="about-title">Kurucu & AI Otomasyon Uzmanı</div>
+          <div class="about-socials">
+            <a href="mailto:info@halitautomation.com" class="social-btn">✉ Email</a>
+            <a href="https://linkedin.com" target="_blank" class="social-btn">in LinkedIn</a>
+          </div>
+        </div>
+        <div class="about-content">
+          <h2>Teknoloji + <em>İnsan Deneyimi</em></h2>
+          <div class="divider"></div>
+          <p>Öğretmenlik, otelcilik ve işletmecilik geçmişimle müşterilerinizin ne istediğini gerçekten anlıyorum. Bu deneyimi AI ve otomasyon teknolojisiyle birleştirerek işletmelerin büyümesine yardımcı oluyorum.</p>
+          <p>Karmaşık teknik sistemleri, iş sahiplerinin anlayacağı ve hemen kullanabileceği çözümlere dönüştürüyorum. Sadece kurulum değil, sonuç odaklı çalışıyorum.</p>
+          <div class="about-skills">
+            <span class="skill">n8n Advanced</span>
+            <span class="skill">Claude API</span>
+            <span class="skill">OpenAI GPT-4o</span>
+            <span class="skill">WhatsApp API</span>
+            <span class="skill">Supabase</span>
+            <span class="skill">Google Workspace</span>
+            <span class="skill">Instantly.ai</span>
+            <span class="skill">100+ API</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- İLETİŞİM -->
+  <section class="sec" id="iletisim">
+    <div class="container">
+      <div class="sec-head center">
+        <span class="sec-label">İletişim</span>
+        <h2 class="sec-title">Projenizi <em>Konuşalım</em></h2>
+        <div class="divider"></div>
+        <p class="sec-sub">Ücretsiz danışma görüşmesi için formu doldurun. 24 saat içinde dönüş yapıyorum.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Hızlı İletişim</h3>
+          <p>Projenizi anlatın, size en uygun çözümü birlikte bulalım. İlk görüşme tamamen ücretsiz.</p>
+          <div class="contact-items">
+            <div class="contact-item">
+              <div class="ci-icon">✉</div>
+              <div>
+                <div class="ci-label">E-posta</div>
+                <div class="ci-value">info@halitautomation.com</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="ci-icon">💬</div>
+              <div>
+                <div class="ci-label">WhatsApp</div>
+                <div class="ci-value">+90 555 193 48 07</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="ci-icon">📍</div>
+              <div>
+                <div class="ci-label">Konum</div>
+                <div class="ci-value">Antalya, Türkiye (Uzaktan Hizmet)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form">
+          <form onsubmit="handleForm(event)">
+            <div class="form-group">
+              <label>Adınız</label>
+              <input type="text" placeholder="Ad Soyad" required />
+            </div>
+            <div class="form-group">
+              <label>E-posta</label>
+              <input type="email" placeholder="ornek@sirket.com" required />
+            </div>
+            <div class="form-group">
+              <label>İlgilendiğiniz Hizmet</label>
+              <select>
+                <option>Workflow Otomasyonu</option>
+                <option>WhatsApp / Chatbot</option>
+                <option>AI Entegrasyonu</option>
+                <option>Satış & CRM Otomasyonu</option>
+                <option>Halflow — Dijital Sekreter</option>
+                <option>Diğer</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Mesajınız</label>
+              <textarea placeholder="Projenizi kısaca anlatın..."></textarea>
+            </div>
+            <button type="submit" class="btn-form">Ücretsiz Danışma İste →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <div class="logo-icon">H</div>
+            <div class="logo-text">Halit <span>Automation</span></div>
+          </a>
+          <p>İşletmeniz için yapay zeka destekli otomasyon çözümleri. Türkiye genelinde uzaktan hizmet.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Hizmetler</h4>
+          <ul>
+            <li><a href="#hizmetler">Workflow Otomasyonu</a></li>
+            <li><a href="#hizmetler">WhatsApp Bot</a></li>
+            <li><a href="#hizmetler">AI Entegrasyon</a></li>
+            <li><a href="#hizmetler">Satış Otomasyonu</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Bağlantılar</h4>
+          <ul>
+            <li><a href="https://halflow.info" target="_blank">Halflow.info</a></li>
+            <li><a href="#hakkimizda">Hakkımızda</a></li>
+            <li><a href="#iletisim">İletişim</a></li>
+            <li><a href="mailto:info@halitautomation.com">E-posta</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Halit Automation. Tüm hakları saklıdır.</p>
+        <p>info@halitautomation.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.style.borderBottomColor = window.scrollY > 50 ? 'rgba(201,168,76,0.15)' : 'rgba(255,255,255,0.06)';
+    });
+
+    // Form handler
+    function handleForm(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.btn-form');
+      btn.textContent = '✓ Mesajınız alındı!';
+      btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+      setTimeout(() => {
+        btn.textContent = 'Ücretsiz Danışma İste →';
+        btn.style.background = '';
+        e.target.reset();
+      }, 3000);
+    }
+
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.service-card, .process-step, .testi-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
