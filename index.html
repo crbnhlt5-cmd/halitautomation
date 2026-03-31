@@ -700,15 +700,15 @@
           <form onsubmit="handleForm(event)">
             <div class="form-group">
               <label>Adınız</label>
-              <input type="text" placeholder="Ad Soyad" required />
+              <input id="ha-name" type="text" placeholder="Ad Soyad" required />
             </div>
             <div class="form-group">
-              <label>E-posta</label>
-              <input type="email" placeholder="ornek@sirket.com" required />
+              <label>WhatsApp / Telefon</label>
+              <input id="ha-phone" type="tel" placeholder="05XX XXX XX XX" required />
             </div>
             <div class="form-group">
               <label>İlgilendiğiniz Hizmet</label>
-              <select>
+              <select id="ha-service">
                 <option>Workflow Otomasyonu</option>
                 <option>WhatsApp / Chatbot</option>
                 <option>AI Entegrasyonu</option>
@@ -719,9 +719,9 @@
             </div>
             <div class="form-group">
               <label>Mesajınız</label>
-              <textarea placeholder="Projenizi kısaca anlatın..."></textarea>
+              <textarea id="ha-msg" placeholder="Projenizi kısaca anlatın..."></textarea>
             </div>
-            <button type="submit" class="btn-form">Ücretsiz Danışma İste →</button>
+            <button type="submit" class="btn-form">💬 WhatsApp'tan Danışma İste →</button>
           </form>
         </div>
       </div>
@@ -775,11 +775,23 @@
     // Form handler
     function handleForm(e) {
       e.preventDefault();
+      const name    = document.getElementById('ha-name').value.trim();
+      const phone   = document.getElementById('ha-phone').value.trim();
+      const service = document.getElementById('ha-service').value;
+      const msg     = document.getElementById('ha-msg').value.trim() || '-';
+      const text    = `Merhaba Halit! Ücretsiz danışma talep ediyorum.\n\n👤 Ad: ${name}\n📱 Telefon: ${phone}\n🔧 Hizmet: ${service}\n💬 Mesaj: ${msg}`;
       const btn = e.target.querySelector('.btn-form');
-      btn.textContent = '✓ Mesajınız alındı!';
+      btn.textContent = '✓ WhatsApp açılıyor...';
       btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+      const link = document.createElement('a');
+      link.href = 'https://wa.me/905551934807?text=' + encodeURIComponent(text);
+      link.target = '_blank';
+      link.rel = 'noopener';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
       setTimeout(() => {
-        btn.textContent = 'Ücretsiz Danışma İste →';
+        btn.textContent = '💬 WhatsApp\'tan Danışma İste →';
         btn.style.background = '';
         e.target.reset();
       }, 3000);
