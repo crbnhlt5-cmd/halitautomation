@@ -6,168 +6,207 @@
   <title>Halit Automation — AI & Otomasyon Ajansı</title>
   <meta name="description" content="İşletmeniz için yapay zeka destekli otomasyon çözümleri. n8n workflow, WhatsApp bot, AI entegrasyon ve satış otomasyonu." />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
   <style>
     :root {
-      --navy: #0a0e1a;
-      --navy2: #0f1525;
-      --navy3: #141c30;
+      --bg: #080c18;
+      --bg2: #0c1020;
+      --bg3: #111828;
       --gold: #c9a84c;
       --gold2: #e8c96a;
-      --gold-glow: rgba(201,168,76,0.12);
-      --gold-border: rgba(201,168,76,0.25);
-      --text: #e8e8f0;
-      --text2: #8a8a9e;
-      --text3: #4a4a60;
+      --gold-dim: rgba(201,168,76,0.1);
+      --gold-border: rgba(201,168,76,0.2);
+      --text: #eeeef2;
+      --text2: #8888a0;
+      --text3: #3a3a52;
       --border: rgba(255,255,255,0.06);
-      --card: rgba(255,255,255,0.025);
-      --card2: rgba(255,255,255,0.045);
+      --card: rgba(255,255,255,0.022);
+      --card-hover: rgba(255,255,255,0.04);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--text); overflow-x: hidden; }
-    ::selection { background: rgba(201,168,76,0.25); }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.6; }
+    ::selection { background: rgba(201,168,76,0.2); }
 
-    .container { max-width: 1140px; margin: 0 auto; padding: 0 28px; }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
 
-    /* ── NAV ── */
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.from-left { transform: translateX(-36px); }
+    .reveal.from-right { transform: translateX(36px); }
+    .reveal.zoom { transform: scale(0.94); }
+    .reveal.visible {
+      opacity: 1;
+      transform: translate(0) scale(1);
+    }
+
+    /* ─── NAV ─── */
     nav {
-      position: sticky; top: 0; z-index: 100;
-      padding: 20px 0;
-      background: rgba(10,14,26,0.92);
-      backdrop-filter: blur(20px);
+      position: sticky; top: 0; z-index: 200;
+      padding: 18px 0;
+      background: rgba(8,12,24,0.9);
+      backdrop-filter: blur(24px);
       border-bottom: 1px solid var(--border);
+      transition: border-color 0.3s;
     }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; }
     .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--gold), var(--gold2)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 900; color: var(--navy); }
-    .logo-text { font-size: 1.1rem; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
-    .logo-text span { color: var(--gold); }
-    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
-    .nav-links a { font-size: 0.85rem; color: var(--text2); text-decoration: none; transition: color 0.2s; font-weight: 500; }
-    .nav-links a:hover { color: var(--text); }
-    .btn-nav {
-      padding: 9px 22px;
+    .logo-icon {
+      width: 34px; height: 34px;
       background: linear-gradient(135deg, var(--gold), var(--gold2));
-      color: var(--navy);
       border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-decoration: none;
-      transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; font-weight: 900; color: var(--bg);
     }
-    .btn-nav:hover { opacity: 0.9; box-shadow: 0 4px 20px rgba(201,168,76,0.35); }
+    .logo-text { font-size: 1.05rem; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
+    .logo-text span { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 0.83rem; color: var(--text2); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      padding: 9px 20px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--bg);
+      border-radius: 8px;
+      font-size: 0.83rem; font-weight: 700;
+      text-decoration: none;
+      transition: box-shadow 0.2s, opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.88; box-shadow: 0 4px 20px rgba(201,168,76,0.3); }
 
-    /* ── HERO ── */
+    /* ─── HERO ─── */
     .hero {
-      padding: 96px 0 100px;
+      padding: 110px 0 120px;
       position: relative;
       overflow: hidden;
     }
-    .hero-bg {
+    #hero-canvas {
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 70%);
-      pointer-events: none;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 0;
     }
-    .hero-inner { position: relative; z-index: 1; text-align: center; max-width: 780px; margin: 0 auto; }
+    .hero-glow {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% -10%, rgba(201,168,76,0.07) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(201,168,76,0.04) 0%, transparent 60%);
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      text-align: center;
+      max-width: 800px; margin: 0 auto;
+    }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(201,168,76,0.08);
+      background: rgba(201,168,76,0.07);
       border: 1px solid var(--gold-border);
       color: var(--gold);
-      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 6px 16px; border-radius: 100px;
-      margin-bottom: 28px;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 7px 18px; border-radius: 100px;
+      margin-bottom: 32px;
     }
-    .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
+    .badge-dot {
+      width: 6px; height: 6px; background: var(--gold); border-radius: 50%;
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.35;transform:scale(0.75)} }
 
-    h1 {
-      font-size: clamp(2.6rem, 5vw, 4.2rem);
+    .hero h1 {
+      font-size: clamp(2.8rem, 5.5vw, 4.4rem);
       font-weight: 900;
-      line-height: 1.06;
+      line-height: 1.05;
       letter-spacing: -0.04em;
-      margin-bottom: 22px;
+      margin-bottom: 24px;
+      color: var(--text);
     }
-    h1 em { font-style: normal; color: var(--gold); }
+    .hero h1 em { font-style: normal; color: var(--gold); }
     .hero-sub {
-      font-size: 1.1rem;
-      color: var(--text2);
-      line-height: 1.8;
-      margin-bottom: 40px;
-      max-width: 580px;
-      margin-left: auto;
-      margin-right: auto;
+      font-size: 1.12rem; color: var(--text2); line-height: 1.85;
+      margin-bottom: 44px; max-width: 600px; margin-left: auto; margin-right: auto;
     }
-    .hero-btns { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 60px; }
+    .hero-btns {
+      display: flex; align-items: center; justify-content: center;
+      gap: 14px; flex-wrap: wrap; margin-bottom: 72px;
+    }
     .btn-primary {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 15px 32px;
+      padding: 16px 34px;
       background: linear-gradient(135deg, var(--gold), var(--gold2));
-      color: var(--navy);
-      border-radius: 10px;
-      font-size: 1rem; font-weight: 700;
-      text-decoration: none;
-      transition: all 0.2s;
+      color: var(--bg); border-radius: 10px;
+      font-size: 1rem; font-weight: 700; text-decoration: none;
+      transition: box-shadow 0.25s, transform 0.25s;
     }
-    .btn-primary:hover { box-shadow: 0 8px 32px rgba(201,168,76,0.4); transform: translateY(-2px); }
-    .btn-secondary {
+    .btn-primary:hover { box-shadow: 0 8px 36px rgba(201,168,76,0.38); transform: translateY(-2px); }
+    .btn-ghost {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 15px 28px;
+      padding: 16px 30px;
       background: transparent;
-      color: var(--text2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      font-size: 1rem; font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text2); border-radius: 10px;
+      font-size: 1rem; font-weight: 600; text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
     }
-    .btn-secondary:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.22); color: var(--text); }
 
-    /* stats strip */
-    .stats-strip {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--border);
+    /* stats */
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(4,1fr);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 18px;
       overflow: hidden;
+      background: var(--border);
+      gap: 1px;
     }
-    .stat {
-      background: var(--navy2);
-      padding: 24px 20px;
-      text-align: center;
+    .stat-item {
+      background: var(--bg2);
+      padding: 24px 20px; text-align: center;
     }
-    .stat-num { font-size: 2rem; font-weight: 900; letter-spacing: -0.04em; color: var(--gold); line-height: 1; }
-    .stat-label { font-size: 0.75rem; color: var(--text2); margin-top: 6px; }
+    .stat-num { font-size: 2.1rem; font-weight: 900; letter-spacing: -0.04em; color: var(--gold); line-height: 1; }
+    .stat-lbl { font-size: 0.73rem; color: var(--text2); margin-top: 6px; }
 
-    /* ── SECTIONS ── */
-    .sec { padding: 96px 0; }
-    .sec-alt { background: var(--navy2); }
-    .sec-label { display: block; color: var(--gold); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
-    .sec-title { font-size: clamp(1.9rem, 3.5vw, 2.8rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 16px; }
+    /* ─── SECTIONS ─── */
+    .sec { padding: 100px 0; }
+    .sec-dark { background: var(--bg2); }
+
+    .sec-label {
+      display: block; color: var(--gold);
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .sec-title {
+      font-size: clamp(2rem, 3.5vw, 2.9rem);
+      font-weight: 900; letter-spacing: -0.035em; line-height: 1.1;
+      margin-bottom: 16px;
+    }
     .sec-title em { font-style: normal; color: var(--gold); }
-    .sec-sub { color: var(--text2); font-size: 0.97rem; line-height: 1.8; max-width: 540px; }
-    .sec-head { margin-bottom: 56px; }
-    .center { text-align: center; }
-    .center .sec-sub { margin: 0 auto; }
-    .divider { width: 48px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); border-radius: 2px; margin: 16px 0; }
-    .center .divider { margin: 16px auto; }
+    .sec-sub { color: var(--text2); font-size: 0.96rem; line-height: 1.8; max-width: 520px; }
+    .sec-head { margin-bottom: 60px; }
+    .sec-head.center { text-align: center; }
+    .sec-head.center .sec-sub { margin: 0 auto; }
 
-    /* ── HİZMETLER ── */
-    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    @media(max-width:900px){ .services-grid { grid-template-columns: repeat(2,1fr); } }
-    @media(max-width:580px){ .services-grid { grid-template-columns: 1fr; } }
+    .divider {
+      width: 44px; height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      border-radius: 2px; margin: 18px 0;
+    }
+    .center .divider { margin: 18px auto; }
 
+    /* ─── SERVICES ─── */
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 18px;
+    }
     .service-card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 36px 32px 28px;
-      transition: all 0.35s cubic-bezier(.22,.68,0,1.2);
-      position: relative;
-      overflow: hidden;
+      padding: 34px 30px 26px;
+      position: relative; overflow: hidden;
+      transition: border-color 0.3s, background 0.3s, transform 0.3s, box-shadow 0.3s;
+      cursor: default;
     }
     .service-card::before {
       content: '';
@@ -178,262 +217,265 @@
     .service-card::after {
       content: '';
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(201,168,76,0.05) 0%, transparent 70%);
+      background: radial-gradient(ellipse 60% 40% at 50% -10%, rgba(201,168,76,0.06), transparent 65%);
       opacity: 0; transition: opacity 0.3s; pointer-events: none;
     }
-    .service-card:hover { border-color: var(--gold-border); background: var(--card2); transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(201,168,76,0.06); }
-    .service-card:hover::before { opacity: 1; }
+    .service-card:hover {
+      border-color: var(--gold-border);
+      background: var(--card-hover);
+      transform: translateY(-5px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.35), 0 0 40px rgba(201,168,76,0.05);
+    }
+    .service-card:hover::before,
     .service-card:hover::after { opacity: 1; }
 
-    .sc-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
-    .service-icon {
-      width: 54px; height: 54px;
-      background: var(--gold-glow);
-      border: 1px solid var(--gold-border);
-      border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem;
+    .sc-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; }
+    .sc-icon {
+      width: 52px; height: 52px;
+      background: var(--gold-dim); border: 1px solid var(--gold-border);
+      border-radius: 13px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
     }
     .sc-num {
-      font-size: 2.8rem; font-weight: 900; letter-spacing: -0.05em;
-      color: rgba(201,168,76,0.08); line-height: 1;
+      font-size: 2.6rem; font-weight: 900; letter-spacing: -0.05em;
+      color: rgba(201,168,76,0.07); line-height: 1;
       transition: color 0.3s;
     }
-    .service-card:hover .sc-num { color: rgba(201,168,76,0.15); }
-
-    .service-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.02em; }
-    .service-card p { font-size: 0.83rem; color: var(--text2); line-height: 1.75; margin-bottom: 20px; }
-
+    .service-card:hover .sc-num { color: rgba(201,168,76,0.14); }
+    .service-card h3 { font-size: 1.04rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.02em; }
+    .service-card p { font-size: 0.82rem; color: var(--text2); line-height: 1.78; margin-bottom: 20px; }
     .sc-divider { height: 1px; background: var(--border); margin-bottom: 16px; }
-
-    .sc-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .sc-tools { display: flex; flex-wrap: wrap; gap: 7px; }
     .sc-tool {
-      display: flex; align-items: center; gap: 5px;
-      font-size: 0.68rem; font-weight: 700;
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.67rem; font-weight: 700;
       padding: 4px 10px;
-      background: rgba(255,255,255,0.04);
+      background: rgba(255,255,255,0.035);
       border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text2);
-      transition: all 0.2s;
+      border-radius: 6px; color: var(--text2);
+      transition: border-color 0.2s, color 0.2s;
     }
-    .sc-tool svg { width: 12px; height: 12px; flex-shrink: 0; }
+    .sc-tool svg { width: 11px; height: 11px; flex-shrink: 0; }
     .service-card:hover .sc-tool { border-color: var(--gold-border); color: var(--text); }
 
-    .tag {
-      font-size: 0.7rem; font-weight: 600;
-      padding: 4px 10px;
-      background: rgba(201,168,76,0.08);
-      border: 1px solid var(--gold-border);
-      color: var(--gold);
-      border-radius: 100px;
-    }
-
-    /* ── SÜREÇ ── */
-    .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-    .process-step {
+    /* ─── PROCESS ─── */
+    .process-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+    .process-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 28px 22px;
-      text-align: center;
-      transition: all 0.3s;
+      border-radius: 16px; padding: 28px 22px; text-align: center;
+      transition: border-color 0.3s, transform 0.3s;
     }
-    .process-step:hover { border-color: var(--gold-border); transform: translateY(-3px); }
-    .step-num {
+    .process-card:hover { border-color: var(--gold-border); transform: translateY(-3px); }
+    .process-num {
       width: 44px; height: 44px;
       background: linear-gradient(135deg, var(--gold), var(--gold2));
-      color: var(--navy);
-      border-radius: 12px;
+      color: var(--bg); border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
       font-size: 1.1rem; font-weight: 900;
       margin: 0 auto 16px;
     }
-    .process-step h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
-    .process-step p { font-size: 0.8rem; color: var(--text2); line-height: 1.65; }
+    .process-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .process-card p { font-size: 0.8rem; color: var(--text2); line-height: 1.65; }
 
-    /* ── ÜRÜN ── */
-    .product-card {
+    /* ─── PRODUCT ─── */
+    .product-wrap {
       background: var(--card);
       border: 1px solid var(--gold-border);
-      border-radius: 20px;
-      padding: 48px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
+      border-radius: 22px; padding: 52px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 52px; align-items: center;
+      position: relative; overflow: hidden;
     }
-    .product-card::before {
+    .product-wrap::before {
       content: '';
-      position: absolute; top: -100px; right: -100px;
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(201,168,76,0.08), transparent 70%);
+      position: absolute; top: -120px; right: -120px;
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(201,168,76,0.07), transparent 65%);
       pointer-events: none;
     }
     .product-badge {
       display: inline-block;
       background: linear-gradient(135deg, var(--gold), var(--gold2));
-      color: var(--navy);
-      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 4px 12px; border-radius: 100px;
-      margin-bottom: 16px;
+      color: var(--bg); font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 100px; margin-bottom: 16px;
     }
-    .product-card h3 { font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 12px; }
-    .product-card h3 span { color: var(--gold); }
-    .product-card p { font-size: 0.92rem; color: var(--text2); line-height: 1.8; margin-bottom: 24px; }
-    .product-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
-    .pf-item { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; }
-    .pf-check { width: 20px; height: 20px; background: var(--gold-glow); border: 1px solid var(--gold-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gold); font-size: 0.65rem; font-weight: 700; }
-    .product-visual {
-      background: var(--navy3);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 24px;
+    .product-wrap h3 { font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 12px; }
+    .product-wrap h3 span { color: var(--gold); }
+    .product-wrap > div > p { font-size: 0.92rem; color: var(--text2); line-height: 1.8; margin-bottom: 26px; }
+    .product-feats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .feat-row { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; }
+    .feat-check {
+      width: 20px; height: 20px; flex-shrink: 0;
+      background: var(--gold-dim); border: 1px solid var(--gold-border);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-size: 0.6rem; font-weight: 700;
     }
-    .pv-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-    .pv-dot { width: 8px; height: 8px; border-radius: 50%; }
-    .pv-title { font-size: 0.8rem; font-weight: 700; }
-    .pv-msg { padding: 10px 14px; border-radius: 10px; font-size: 0.78rem; line-height: 1.5; margin-bottom: 8px; }
-    .pv-msg.in { background: var(--navy2); color: var(--text2); border-bottom-left-radius: 3px; }
-    .pv-msg.out { background: linear-gradient(135deg, var(--gold), var(--gold2)); color: var(--navy); font-weight: 600; border-bottom-right-radius: 3px; margin-left: 20%; }
-    .pv-tag { font-size: 0.65rem; color: var(--text3); margin: 0 4px 8px; }
-    .pv-tag.right { text-align: right; }
+    .chat-mock {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 16px; padding: 22px;
+    }
+    .chat-header {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 16px; padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .online-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; }
+    .chat-title { font-size: 0.8rem; font-weight: 700; }
+    .chat-msg { padding: 10px 14px; border-radius: 10px; font-size: 0.77rem; line-height: 1.5; margin-bottom: 6px; }
+    .chat-msg.in { background: var(--bg2); color: var(--text2); border-bottom-left-radius: 3px; }
+    .chat-msg.out { background: linear-gradient(135deg, var(--gold), var(--gold2)); color: var(--bg); font-weight: 600; border-bottom-right-radius: 3px; margin-left: 18%; }
+    .chat-ts { font-size: 0.62rem; color: var(--text3); margin: 0 4px 8px; }
+    .chat-ts.r { text-align: right; }
 
-    /* ── TESTİMONİALLER ── */
-    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    /* ─── TESTIMONIALS ─── */
+    .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
     .testi-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 28px;
-      transition: all 0.3s;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 18px; padding: 28px;
+      transition: border-color 0.3s, transform 0.3s;
     }
-    .testi-card:hover { border-color: var(--gold-border); }
-    .stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 14px; letter-spacing: 2px; }
-    .testi-text { font-size: 0.88rem; color: var(--text2); line-height: 1.75; margin-bottom: 20px; font-style: italic; }
+    .testi-card:hover { border-color: var(--gold-border); transform: translateY(-3px); }
+    .testi-stars { color: var(--gold); font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 14px; }
+    .testi-text { font-size: 0.87rem; color: var(--text2); line-height: 1.78; margin-bottom: 20px; font-style: italic; }
     .testi-author { display: flex; align-items: center; gap: 12px; }
     .testi-av {
-      width: 40px; height: 40px; border-radius: 10px;
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
       background: linear-gradient(135deg, var(--gold), var(--gold2));
       display: flex; align-items: center; justify-content: center;
-      font-size: 1rem; font-weight: 700; color: var(--navy);
-      flex-shrink: 0;
+      font-size: 1rem; font-weight: 700; color: var(--bg);
     }
-    .testi-name { font-size: 0.88rem; font-weight: 700; }
-    .testi-role { font-size: 0.75rem; color: var(--text2); }
+    .testi-name { font-size: 0.87rem; font-weight: 700; }
+    .testi-role { font-size: 0.73rem; color: var(--text2); }
 
-    /* ── HAKKIMIZDA ── */
+    /* ─── ABOUT ─── */
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-    .about-img {
-      background: var(--navy3);
-      border: 1px solid var(--gold-border);
-      border-radius: 20px;
-      padding: 40px;
-      text-align: center;
+    .about-card {
+      background: var(--bg3); border: 1px solid var(--gold-border);
+      border-radius: 20px; padding: 40px; text-align: center;
     }
     .about-avatar {
-      width: 100px; height: 100px; border-radius: 20px;
+      width: 96px; height: 96px; border-radius: 20px; margin: 0 auto 20px;
       background: linear-gradient(135deg, var(--gold), var(--gold2));
       display: flex; align-items: center; justify-content: center;
-      font-size: 2.5rem; font-weight: 900; color: var(--navy);
-      margin: 0 auto 20px;
+      font-size: 2.4rem; font-weight: 900; color: var(--bg);
     }
     .about-name { font-size: 1.4rem; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 6px; }
-    .about-title { font-size: 0.85rem; color: var(--gold); font-weight: 600; margin-bottom: 20px; }
-    .about-socials { display: flex; justify-content: center; gap: 10px; }
-    .social-btn {
-      padding: 8px 16px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 0.75rem; color: var(--text2);
-      text-decoration: none;
-      transition: all 0.2s;
-      font-weight: 600;
+    .about-title-tag { font-size: 0.84rem; color: var(--gold); font-weight: 600; margin-bottom: 22px; }
+    .about-socials { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
+    .soc-btn {
+      padding: 7px 15px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; font-size: 0.73rem; color: var(--text2);
+      text-decoration: none; font-weight: 600;
+      transition: border-color 0.2s, color 0.2s;
     }
-    .social-btn:hover { border-color: var(--gold-border); color: var(--gold); }
-    .about-content h2 { font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 16px; }
-    .about-content h2 em { font-style: normal; color: var(--gold); }
-    .about-content p { font-size: 0.92rem; color: var(--text2); line-height: 1.85; margin-bottom: 16px; }
-    .about-skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
-    .skill { padding: 6px 14px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; font-size: 0.78rem; color: var(--text2); font-weight: 500; }
+    .soc-btn:hover { border-color: var(--gold-border); color: var(--gold); }
+    .about-body h2 { font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 16px; }
+    .about-body h2 em { font-style: normal; color: var(--gold); }
+    .about-body p { font-size: 0.91rem; color: var(--text2); line-height: 1.85; margin-bottom: 14px; }
+    .skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .skill-tag {
+      padding: 5px 13px; background: var(--card); border: 1px solid var(--border);
+      border-radius: 7px; font-size: 0.76rem; color: var(--text2); font-weight: 500;
+    }
 
-    /* ── İLETİŞİM ── */
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    /* ─── CONTACT ─── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; align-items: start; }
     .contact-info h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 12px; }
     .contact-info p { font-size: 0.9rem; color: var(--text2); line-height: 1.8; margin-bottom: 28px; }
-    .contact-items { display: flex; flex-direction: column; gap: 14px; }
-    .contact-item { display: flex; align-items: center; gap: 14px; }
-    .ci-icon {
-      width: 44px; height: 44px; border-radius: 10px;
-      background: var(--gold-glow); border: 1px solid var(--gold-border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; flex-shrink: 0;
+    .contact-list { display: flex; flex-direction: column; gap: 14px; }
+    .contact-row { display: flex; align-items: center; gap: 14px; }
+    .ci {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: var(--gold-dim); border: 1px solid var(--gold-border);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
     }
-    .ci-label { font-size: 0.72rem; color: var(--text2); margin-bottom: 2px; }
+    .ci-label { font-size: 0.7rem; color: var(--text2); margin-bottom: 2px; }
     .ci-value { font-size: 0.9rem; font-weight: 600; }
-    .contact-form { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; }
-    .form-group { margin-bottom: 16px; }
-    .form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text2); margin-bottom: 8px; }
-    .form-group input, .form-group textarea, .form-group select {
-      width: 100%;
-      background: var(--navy3);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 16px;
-      color: var(--text);
-      font-size: 0.9rem;
-      font-family: 'Inter', sans-serif;
-      outline: none;
+    .contact-form-wrap {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 18px; padding: 32px;
+    }
+    .form-row { margin-bottom: 16px; }
+    .form-row label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text2); margin-bottom: 7px; }
+    .form-row input,
+    .form-row textarea,
+    .form-row select {
+      width: 100%; background: var(--bg3);
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 12px 15px; color: var(--text); font-size: 0.9rem;
+      font-family: 'Inter', sans-serif; outline: none;
       transition: border-color 0.2s;
     }
-    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--gold-border); }
-    .form-group textarea { resize: vertical; min-height: 110px; }
-    .form-group select option { background: var(--navy2); }
-    .btn-form {
-      width: 100%;
-      padding: 14px;
+    .form-row input:focus,
+    .form-row textarea:focus,
+    .form-row select:focus { border-color: var(--gold-border); }
+    .form-row textarea { resize: vertical; min-height: 108px; }
+    .form-row select option { background: var(--bg2); }
+    .btn-submit {
+      width: 100%; padding: 14px;
       background: linear-gradient(135deg, var(--gold), var(--gold2));
-      color: var(--navy);
-      border: none;
-      border-radius: 10px;
-      font-size: 0.95rem; font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
+      color: var(--bg); border: none; border-radius: 10px;
+      font-size: 0.95rem; font-weight: 700; cursor: pointer;
+      transition: opacity 0.2s, box-shadow 0.2s;
     }
-    .btn-form:hover { opacity: 0.9; box-shadow: 0 6px 24px rgba(201,168,76,0.35); }
+    .btn-submit:hover { opacity: 0.88; box-shadow: 0 6px 24px rgba(201,168,76,0.3); }
 
-    /* ── FOOTER ── */
+    /* ─── CTA BAND ─── */
+    .cta-band {
+      text-align: center;
+      background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(201,168,76,0.03) 100%);
+      border-top: 1px solid var(--gold-border); border-bottom: 1px solid var(--gold-border);
+      padding: 80px 0;
+    }
+    .cta-band h2 { font-size: clamp(1.9rem, 3vw, 2.8rem); font-weight: 900; letter-spacing: -0.035em; margin-bottom: 16px; }
+    .cta-band h2 em { font-style: normal; color: var(--gold); }
+    .cta-band p { font-size: 1rem; color: var(--text2); margin-bottom: 36px; }
+
+    /* ─── FOOTER ─── */
     footer {
-      background: var(--navy2);
-      border-top: 1px solid var(--border);
-      padding: 48px 0 32px;
+      background: var(--bg2); border-top: 1px solid var(--border);
+      padding: 52px 0 32px;
     }
-    .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
-    .footer-brand p { font-size: 0.85rem; color: var(--text2); line-height: 1.75; margin-top: 12px; max-width: 280px; }
-    .footer-col h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 16px; color: var(--gold); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 52px; margin-bottom: 44px; }
+    .footer-brand p { font-size: 0.83rem; color: var(--text2); line-height: 1.75; margin-top: 12px; max-width: 270px; }
+    .footer-col h4 { font-size: 0.83rem; font-weight: 700; color: var(--gold); margin-bottom: 16px; }
     .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .footer-col ul a { font-size: 0.82rem; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul a { font-size: 0.8rem; color: var(--text2); text-decoration: none; transition: color 0.2s; }
     .footer-col ul a:hover { color: var(--text); }
-    .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; }
-    .footer-bottom p { font-size: 0.78rem; color: var(--text3); }
+    .footer-bottom {
+      border-top: 1px solid var(--border); padding-top: 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-bottom p { font-size: 0.76rem; color: var(--text3); }
 
-    /* ── RESPONSIVE ── */
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .process-grid { grid-template-columns: repeat(2,1fr); }
+    }
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .stats-strip { grid-template-columns: repeat(2, 1fr); }
-      .services-grid, .testi-grid, .about-grid, .contact-grid, .footer-inner { grid-template-columns: 1fr; }
-      .process-grid { grid-template-columns: repeat(2, 1fr); }
-      .product-card { grid-template-columns: 1fr; }
+      .stats-bar { grid-template-columns: repeat(2,1fr); }
+      .services-grid { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .product-wrap { grid-template-columns: 1fr; padding: 32px; gap: 32px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .process-grid { grid-template-columns: repeat(2,1fr); }
+    }
+    @media (max-width: 580px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .process-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
   <!-- NAV -->
-  <nav>
+  <nav id="main-nav">
     <div class="container nav-inner">
       <a href="#" class="logo">
         <div class="logo-icon">H</div>
@@ -446,49 +488,43 @@
         <li><a href="#hakkimizda">Hakkımızda</a></li>
         <li><a href="#iletisim">İletişim</a></li>
       </ul>
-      <a href="#iletisim" class="btn-nav">Ücretsiz Danışma</a>
+      <a href="#iletisim" class="nav-cta">Ücretsiz Danışma</a>
     </div>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
-    <canvas id="hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
-    <div class="hero-bg"></div>
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-glow"></div>
     <div class="container">
       <div class="hero-inner">
-        <div class="hero-badge" data-aos="fade-down" data-aos-duration="600">AI & Otomasyon Ajansı — Türkiye</div>
-        <h1 data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">İşletmenizi <em>Yapay Zeka</em> ile Büyütün</h1>
-        <p class="hero-sub" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">Tekrarlayan işleri otomatize eder, satışlarınızı artırır, müşterilerinize 7/24 hizmet veririz. n8n, WhatsApp, AI entegrasyon ve daha fazlası.</p>
-        <div class="hero-btns" data-aos="fade-up" data-aos-duration="700" data-aos-delay="300">
-          <a href="#iletisim" class="btn-primary">Ücretsiz Danışma Al →</a>
-          <a href="#hizmetler" class="btn-secondary">Hizmetleri Gör</a>
+        <div class="hero-badge reveal">
+          <span class="badge-dot"></span>AI & Otomasyon Ajansı — Türkiye
         </div>
-        <div class="stats-strip" data-aos="fade-up" data-aos-duration="700" data-aos-delay="400">
-          <div class="stat">
-            <div class="stat-num">50+</div>
-            <div class="stat-label">Tamamlanan Proje</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num">%90</div>
-            <div class="stat-label">Zaman Tasarrufu</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num">7/24</div>
-            <div class="stat-label">AI Destekli Hizmet</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num">100+</div>
-            <div class="stat-label">API Entegrasyonu</div>
-          </div>
+        <h1 class="reveal" style="transition-delay:80ms">
+          İşletmenizi <em>Yapay Zeka</em> ile Büyütün
+        </h1>
+        <p class="hero-sub reveal" style="transition-delay:160ms">
+          Tekrarlayan işleri otomatize eder, satışlarınızı artırır,<br>müşterilerinize 7/24 hizmet veririz.
+        </p>
+        <div class="hero-btns reveal" style="transition-delay:240ms">
+          <a href="#iletisim" class="btn-primary">Ücretsiz Danışma Al →</a>
+          <a href="#hizmetler" class="btn-ghost">Hizmetleri Gör</a>
+        </div>
+        <div class="stats-bar reveal" style="transition-delay:320ms">
+          <div class="stat-item"><div class="stat-num">50+</div><div class="stat-lbl">Tamamlanan Proje</div></div>
+          <div class="stat-item"><div class="stat-num">%90</div><div class="stat-lbl">Zaman Tasarrufu</div></div>
+          <div class="stat-item"><div class="stat-num">7/24</div><div class="stat-lbl">AI Destekli Hizmet</div></div>
+          <div class="stat-item"><div class="stat-num">100+</div><div class="stat-lbl">API Entegrasyonu</div></div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- HİZMETLER -->
-  <section class="sec sec-alt" id="hizmetler">
+  <section class="sec sec-dark" id="hizmetler">
     <div class="container">
-      <div class="sec-head" data-aos="fade-up">
+      <div class="sec-head reveal">
         <span class="sec-label">Hizmetlerimiz</span>
         <h2 class="sec-title">İşletmeniz için <em>Özel Çözümler</em></h2>
         <div class="divider"></div>
@@ -496,9 +532,9 @@
       </div>
       <div class="services-grid">
 
-        <div class="service-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="service-card reveal" style="transition-delay:0ms">
           <div class="sc-top">
-            <div class="service-icon">🌐</div>
+            <div class="sc-icon">🌐</div>
             <span class="sc-num">01</span>
           </div>
           <h3>Web Sitesi & Dijital Altyapı</h3>
@@ -506,31 +542,31 @@
           <div class="sc-divider"></div>
           <div class="sc-tools">
             <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#3ECF8E"><circle cx="12" cy="12" r="10"/><text x="6" y="16" font-size="9" fill="#fff" font-weight="bold">SB</text></svg>Supabase</span>
-            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#4285F4"><rect width="24" height="24" rx="4"/><text x="4" y="17" font-size="11" fill="#fff" font-weight="bold">V</text></svg>Vercel</span>
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#4285F4"><rect width="24" height="24" rx="4"/><text x="5" y="17" font-size="12" fill="#fff" font-weight="bold">V</text></svg>Vercel</span>
             <span class="sc-tool">🔒 KVKK</span>
             <span class="sc-tool">⚡ Hızlı Teslimat</span>
           </div>
         </div>
 
-        <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="service-card reveal" style="transition-delay:80ms">
           <div class="sc-top">
-            <div class="service-icon">⚙️</div>
+            <div class="sc-icon">⚙️</div>
             <span class="sc-num">02</span>
           </div>
           <h3>İş Akışı Otomasyonu</h3>
           <p>Tekrar eden işleri bir daha yapmayın. Fatura, bildirim, rapor, sipariş takibi — n8n ile kuruyoruz, siz sadece sonucu görürsünüz.</p>
           <div class="sc-divider"></div>
           <div class="sc-tools">
-            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#EA4B00"><circle cx="12" cy="12" r="10"/><text x="6.5" y="16" font-size="9" fill="#fff" font-weight="bold">n8n</text></svg>n8n</span>
-            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#6D00CC"><rect width="24" height="24" rx="4"/><text x="4" y="16" font-size="9" fill="#fff" font-weight="bold">Make</text></svg>Make</span>
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#EA4B00"><circle cx="12" cy="12" r="10"/><text x="5.5" y="16" font-size="8" fill="#fff" font-weight="bold">n8n</text></svg>n8n</span>
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#6D00CC"><rect width="24" height="24" rx="4"/><text x="3" y="16" font-size="8" fill="#fff" font-weight="bold">Make</text></svg>Make</span>
             <span class="sc-tool">🔗 API</span>
             <span class="sc-tool">📧 Gmail / Sheets</span>
           </div>
         </div>
 
-        <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="service-card reveal" style="transition-delay:160ms">
           <div class="sc-top">
-            <div class="service-icon">🎙️</div>
+            <div class="sc-icon">🎙️</div>
             <span class="sc-num">03</span>
           </div>
           <h3>AI Asistan & Sesli Ajan</h3>
@@ -544,13 +580,13 @@
           </div>
         </div>
 
-        <div class="service-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="service-card reveal" style="transition-delay:0ms">
           <div class="sc-top">
-            <div class="service-icon">📈</div>
+            <div class="sc-icon">📈</div>
             <span class="sc-num">04</span>
           </div>
           <h3>Satış & CRM Yönetimi</h3>
-          <p>Potansiyel müşterileri otomatik takip edin, tekliflerinizi zamanında gönderin, satış sürecinizi baştan sona otomatize edin. Daha az uğraş, daha çok satış.</p>
+          <p>Potansiyel müşterileri otomatik takip edin, tekliflerinizi zamanında gönderin, satış sürecinizi baştan sona otomatize edin.</p>
           <div class="sc-divider"></div>
           <div class="sc-tools">
             <span class="sc-tool">📊 CRM Pipeline</span>
@@ -560,24 +596,24 @@
           </div>
         </div>
 
-        <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="service-card reveal" style="transition-delay:80ms">
           <div class="sc-top">
-            <div class="service-icon">🎯</div>
+            <div class="sc-icon">🎯</div>
             <span class="sc-num">05</span>
           </div>
           <h3>Reklam & Büyüme</h3>
-          <p>Instagram, Facebook ve Google'da doğru kişiye doğru reklam. Bütçenizi boşa harcamadan müşteriye dönüştürüyoruz. Satış odaklı kampanyalar.</p>
+          <p>Instagram, Facebook ve Google'da doğru kişiye doğru reklam. Bütçenizi boşa harcamadan müşteriye dönüştürüyoruz.</p>
           <div class="sc-divider"></div>
           <div class="sc-tools">
             <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.26h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>Meta Ads</span>
-            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#4285F4"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Google Ads</span>
+            <span class="sc-tool"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Google Ads</span>
             <span class="sc-tool">🔄 Retargeting</span>
           </div>
         </div>
 
-        <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="service-card reveal" style="transition-delay:160ms">
           <div class="sc-top">
-            <div class="service-icon">🎬</div>
+            <div class="sc-icon">🎬</div>
             <span class="sc-num">06</span>
           </div>
           <h3>İçerik & Görünürlük</h3>
@@ -586,7 +622,7 @@
           <div class="sc-tools">
             <span class="sc-tool">🎭 AI Avatar</span>
             <span class="sc-tool">📱 UGC Video</span>
-            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="url(#ig)"><defs><linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="50%" stop-color="#e6683c"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs><rect width="24" height="24" rx="6"/><rect x="6" y="6" width="12" height="12" rx="3" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="3" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="17" cy="7" r="1" fill="#fff"/></svg>Reels</span>
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="url(#igr)"><defs><linearGradient id="igr" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="50%" stop-color="#e6683c"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs><rect width="24" height="24" rx="6"/><rect x="6" y="6" width="12" height="12" rx="3" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="3" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="17" cy="7" r="1" fill="#fff"/></svg>Reels</span>
             <span class="sc-tool">🎵 TikTok</span>
           </div>
         </div>
@@ -598,30 +634,30 @@
   <!-- SÜREÇ -->
   <section class="sec" id="surec">
     <div class="container">
-      <div class="sec-head center" data-aos="fade-up">
+      <div class="sec-head center reveal">
         <span class="sec-label">Nasıl Çalışır</span>
         <h2 class="sec-title">4 Adımda <em>Otomasyon</em></h2>
         <div class="divider"></div>
         <p class="sec-sub">Karmaşık süreçleri basit 4 adıma indirgedik. İlk sonuçları 1 haftada görürsünüz.</p>
       </div>
       <div class="process-grid">
-        <div class="process-step" data-aos="fade-up" data-aos-delay="0">
-          <div class="step-num">1</div>
+        <div class="process-card reveal" style="transition-delay:0ms">
+          <div class="process-num">1</div>
           <h3>Keşif & Analiz</h3>
           <p>İş süreçlerinizi, sorunlarınızı ve hedeflerinizi birlikte analiz ediyoruz.</p>
         </div>
-        <div class="process-step" data-aos="fade-up" data-aos-delay="100">
-          <div class="step-num">2</div>
+        <div class="process-card reveal" style="transition-delay:100ms">
+          <div class="process-num">2</div>
           <h3>Çözüm Tasarımı</h3>
           <p>Size özel otomasyon mimarisi tasarlıyoruz. Hangi araçlar, nasıl entegre olacak.</p>
         </div>
-        <div class="process-step" data-aos="fade-up" data-aos-delay="200">
-          <div class="step-num">3</div>
+        <div class="process-card reveal" style="transition-delay:200ms">
+          <div class="process-num">3</div>
           <h3>Geliştirme & Test</h3>
           <p>Sistemi kuruyoruz, test ediyoruz, hataları düzeltiyoruz. Canlıya hazır hale getiriyoruz.</p>
         </div>
-        <div class="process-step" data-aos="fade-up" data-aos-delay="300">
-          <div class="step-num">4</div>
+        <div class="process-card reveal" style="transition-delay:300ms">
+          <div class="process-num">4</div>
           <h3>Destek & Optimizasyon</h3>
           <p>Canlıya geçtikten sonra da yanınızdayız. Sürekli izleme ve iyileştirme.</p>
         </div>
@@ -630,41 +666,41 @@
   </section>
 
   <!-- ÜRÜN: HALFLOW -->
-  <section class="sec sec-alt" id="urun">
+  <section class="sec sec-dark" id="urun">
     <div class="container">
-      <div class="sec-head" data-aos="fade-right">
+      <div class="sec-head reveal">
         <span class="sec-label">Kendi Ürünümüz</span>
         <h2 class="sec-title">Tanışın: <em>Halflow</em></h2>
         <div class="divider"></div>
         <p class="sec-sub">Küçük işletmeler için geliştirdiğimiz hazır AI dijital sekreter çözümü.</p>
       </div>
-      <div class="product-card" data-aos="zoom-in">
-        <div class="product-content">
+      <div class="product-wrap reveal zoom">
+        <div>
           <span class="product-badge">Hazır Ürün</span>
           <h3><span>Halflow</span> — 7/24 Dijital Sekreter</h3>
           <p>WhatsApp mesajlarınıza AI ile anında yanıt verin. Randevu alın, sık sorulan soruları otomatik cevaplayın, kritik mesajlar için anında uyarı alın.</p>
-          <div class="product-features">
-            <div class="pf-item"><span class="pf-check">✓</span> 7/24 otomatik WhatsApp yanıtı</div>
-            <div class="pf-item"><span class="pf-check">✓</span> AI ile mesaj sınıflandırma</div>
-            <div class="pf-item"><span class="pf-check">✓</span> Randevu yönetimi</div>
-            <div class="pf-item"><span class="pf-check">✓</span> Kritik mesaj anında uyarı</div>
-            <div class="pf-item"><span class="pf-check">✓</span> 1 günde kurulum</div>
+          <div class="product-feats">
+            <div class="feat-row"><span class="feat-check">✓</span>7/24 otomatik WhatsApp yanıtı</div>
+            <div class="feat-row"><span class="feat-check">✓</span>AI ile mesaj sınıflandırma</div>
+            <div class="feat-row"><span class="feat-check">✓</span>Randevu yönetimi</div>
+            <div class="feat-row"><span class="feat-check">✓</span>Kritik mesaj anında uyarı</div>
+            <div class="feat-row"><span class="feat-check">✓</span>1 günde kurulum</div>
           </div>
           <a href="https://halflow.info" target="_blank" class="btn-primary" style="display:inline-flex;">Halflow'u İncele →</a>
         </div>
-        <div class="product-visual">
-          <div class="pv-header">
-            <div class="pv-dot" style="background:#22c55e"></div>
-            <span class="pv-title">Halflow Asistan — Çevrimiçi</span>
+        <div class="chat-mock">
+          <div class="chat-header">
+            <div class="online-dot"></div>
+            <span class="chat-title">Halflow Asistan — Çevrimiçi</span>
           </div>
-          <div class="pv-msg in">Merhaba, yarın saat 14:00 için randevu alabilir miyim?</div>
-          <div class="pv-tag">Müşteri • 14:23</div>
-          <div class="pv-msg out">Merhaba! 14:00 müsait. Randevunuzu oluşturdum, onay SMS'i gönderildi. ✅</div>
-          <div class="pv-tag right">Halflow • 14:23 • Otomatik</div>
-          <div class="pv-msg in">Teşekkürler, çok hızlı!</div>
-          <div class="pv-tag">Müşteri • 14:24</div>
-          <div class="pv-msg out">Rica ederiz! Randevunuzu iptal veya değiştirmek isterseniz buradayım 😊</div>
-          <div class="pv-tag right">Halflow • 14:24 • Otomatik</div>
+          <div class="chat-msg in">Merhaba, yarın saat 14:00 için randevu alabilir miyim?</div>
+          <div class="chat-ts">Müşteri • 14:23</div>
+          <div class="chat-msg out">Merhaba! 14:00 müsait. Randevunuzu oluşturdum, onay SMS'i gönderildi. ✅</div>
+          <div class="chat-ts r">Halflow • 14:23 • Otomatik</div>
+          <div class="chat-msg in">Teşekkürler, çok hızlı!</div>
+          <div class="chat-ts">Müşteri • 14:24</div>
+          <div class="chat-msg out">Rica ederiz! İptal veya değiştirmek isterseniz buradayım 😊</div>
+          <div class="chat-ts r">Halflow • 14:24 • Otomatik</div>
         </div>
       </div>
     </div>
@@ -673,43 +709,34 @@
   <!-- TESTİMONİALLER -->
   <section class="sec" id="gorusler">
     <div class="container">
-      <div class="sec-head center">
+      <div class="sec-head center reveal">
         <span class="sec-label">Müşteri Görüşleri</span>
         <h2 class="sec-title">Müşterilerimiz <em>Ne Diyor?</em></h2>
         <div class="divider"></div>
       </div>
       <div class="testi-grid">
-        <div class="testi-card">
-          <div class="stars">★★★★★</div>
+        <div class="testi-card reveal" style="transition-delay:0ms">
+          <div class="testi-stars">★★★★★</div>
           <p class="testi-text">"WhatsApp botunu kurduktan sonra hafta sonu mesajlarının %100'üne anında yanıt veriliyor. Artık Pazartesi sabahı 20 cevapsız mesajla başlamıyorum."</p>
           <div class="testi-author">
             <div class="testi-av">A</div>
-            <div>
-              <div class="testi-name">Ayşe Kaya</div>
-              <div class="testi-role">Güzellik Salonu Sahibi, Antalya</div>
-            </div>
+            <div><div class="testi-name">Ayşe Kaya</div><div class="testi-role">Güzellik Salonu Sahibi, Antalya</div></div>
           </div>
         </div>
-        <div class="testi-card">
-          <div class="stars">★★★★★</div>
+        <div class="testi-card reveal" style="transition-delay:100ms">
+          <div class="testi-stars">★★★★★</div>
           <p class="testi-text">"Randevu sistemimiz, fatura otomasyonu ve müşteri takibi artık tamamen otomatik. Ekibim asıl işe odaklanıyor. Harika bir yatırım."</p>
           <div class="testi-author">
             <div class="testi-av">M</div>
-            <div>
-              <div class="testi-name">Mehmet Arslan</div>
-              <div class="testi-role">Klinik Müdürü, İstanbul</div>
-            </div>
+            <div><div class="testi-name">Mehmet Arslan</div><div class="testi-role">Klinik Müdürü, İstanbul</div></div>
           </div>
         </div>
-        <div class="testi-card">
-          <div class="stars">★★★★★</div>
+        <div class="testi-card reveal" style="transition-delay:200ms">
+          <div class="testi-stars">★★★★★</div>
           <p class="testi-text">"Lead toplama sistemini kurduk, şimdi her gün 20-30 yeni potansiyel müşteri geliyor. Satışlarımız 3 ayda %60 arttı."</p>
           <div class="testi-author">
             <div class="testi-av">S</div>
-            <div>
-              <div class="testi-name">Selin Demir</div>
-              <div class="testi-role">E-ticaret Girişimcisi, İzmir</div>
-            </div>
+            <div><div class="testi-name">Selin Demir</div><div class="testi-role">E-ticaret Girişimcisi, İzmir</div></div>
           </div>
         </div>
       </div>
@@ -717,88 +744,88 @@
   </section>
 
   <!-- HAKKIMIZDA -->
-  <section class="sec sec-alt" id="hakkimizda">
+  <section class="sec sec-dark" id="hakkimizda">
     <div class="container">
       <div class="about-grid">
-        <div class="about-img">
+        <div class="about-card reveal from-left">
           <div class="about-avatar">H</div>
           <div class="about-name">Halit Cerben</div>
-          <div class="about-title">Kurucu & AI Otomasyon Uzmanı</div>
+          <div class="about-title-tag">Kurucu & AI Otomasyon Uzmanı</div>
           <div class="about-socials">
-            <a href="mailto:info@halitautomation.com" class="social-btn">✉ Email</a>
-            <a href="https://www.linkedin.com/in/halit-cerben-7515b2ba/" target="_blank" rel="noopener" class="social-btn">in LinkedIn</a>
-            <a href="https://www.instagram.com/halflow.i/" target="_blank" rel="noopener" class="social-btn">📷 Instagram</a>
-            <a href="https://www.facebook.com/cerben1" target="_blank" rel="noopener" class="social-btn">f Facebook</a>
+            <a href="mailto:info@halitautomation.com" class="soc-btn">✉ Email</a>
+            <a href="https://www.linkedin.com/in/halit-cerben-7515b2ba/" target="_blank" rel="noopener" class="soc-btn">in LinkedIn</a>
+            <a href="https://www.instagram.com/halflow.i/" target="_blank" rel="noopener" class="soc-btn">📷 Instagram</a>
+            <a href="https://www.facebook.com/cerben1" target="_blank" rel="noopener" class="soc-btn">f Facebook</a>
           </div>
         </div>
-        <div class="about-content">
+        <div class="about-body reveal from-right">
           <h2>Teknoloji + <em>İnsan Deneyimi</em></h2>
           <div class="divider"></div>
           <p>Öğretmenlik, otelcilik ve işletmecilik geçmişimle müşterilerinizin ne istediğini gerçekten anlıyorum. Bu deneyimi AI ve otomasyon teknolojisiyle birleştirerek işletmelerin büyümesine yardımcı oluyorum.</p>
           <p>Karmaşık teknik sistemleri, iş sahiplerinin anlayacağı ve hemen kullanabileceği çözümlere dönüştürüyorum. Sadece kurulum değil, sonuç odaklı çalışıyorum.</p>
-          <div class="about-skills">
-            <span class="skill">n8n Advanced</span>
-            <span class="skill">Claude API</span>
-            <span class="skill">OpenAI GPT-4o</span>
-            <span class="skill">WhatsApp API</span>
-            <span class="skill">Supabase</span>
-            <span class="skill">Google Workspace</span>
-            <span class="skill">Instantly.ai</span>
-            <span class="skill">100+ API</span>
+          <div class="skills">
+            <span class="skill-tag">n8n Advanced</span>
+            <span class="skill-tag">Claude API</span>
+            <span class="skill-tag">OpenAI GPT-4o</span>
+            <span class="skill-tag">WhatsApp API</span>
+            <span class="skill-tag">Supabase</span>
+            <span class="skill-tag">Google Workspace</span>
+            <span class="skill-tag">Instantly.ai</span>
+            <span class="skill-tag">100+ API</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- SON CTA -->
+  <div class="cta-band reveal">
+    <div class="container">
+      <h2>Hazır mısınız? <em>Başlayalım.</em></h2>
+      <p>İlk görüşme tamamen ücretsiz. 24 saat içinde dönüş yapıyorum.</p>
+      <a href="#iletisim" class="btn-primary">Ücretsiz Danışma Al →</a>
+    </div>
+  </div>
+
   <!-- İLETİŞİM -->
   <section class="sec" id="iletisim">
     <div class="container">
-      <div class="sec-head center">
+      <div class="sec-head center reveal">
         <span class="sec-label">İletişim</span>
         <h2 class="sec-title">Projenizi <em>Konuşalım</em></h2>
         <div class="divider"></div>
-        <p class="sec-sub">Ücretsiz danışma görüşmesi için formu doldurun. 24 saat içinde dönüş yapıyorum.</p>
+        <p class="sec-sub">Formu doldurun, WhatsApp üzerinden hemen ulaşayım.</p>
       </div>
       <div class="contact-grid">
-        <div class="contact-info">
+        <div class="contact-info reveal from-left">
           <h3>Hızlı İletişim</h3>
           <p>Projenizi anlatın, size en uygun çözümü birlikte bulalım. İlk görüşme tamamen ücretsiz.</p>
-          <div class="contact-items">
-            <div class="contact-item">
-              <div class="ci-icon">✉</div>
-              <div>
-                <div class="ci-label">E-posta</div>
-                <div class="ci-value">info@halitautomation.com</div>
-              </div>
+          <div class="contact-list">
+            <div class="contact-row">
+              <div class="ci">✉</div>
+              <div><div class="ci-label">E-posta</div><div class="ci-value">info@halitautomation.com</div></div>
             </div>
-            <div class="contact-item">
-              <div class="ci-icon">💬</div>
-              <div>
-                <div class="ci-label">WhatsApp</div>
-                <div class="ci-value">+90 555 193 48 07</div>
-              </div>
+            <div class="contact-row">
+              <div class="ci">💬</div>
+              <div><div class="ci-label">WhatsApp</div><div class="ci-value">+90 555 193 48 07</div></div>
             </div>
-            <div class="contact-item">
-              <div class="ci-icon">📍</div>
-              <div>
-                <div class="ci-label">Konum</div>
-                <div class="ci-value">Antalya, Türkiye (Uzaktan Hizmet)</div>
-              </div>
+            <div class="contact-row">
+              <div class="ci">📍</div>
+              <div><div class="ci-label">Konum</div><div class="ci-value">Antalya, Türkiye (Uzaktan Hizmet)</div></div>
             </div>
           </div>
         </div>
-        <div class="contact-form">
+        <div class="contact-form-wrap reveal from-right">
           <form onsubmit="handleForm(event)">
-            <div class="form-group">
+            <div class="form-row">
               <label>Adınız</label>
               <input type="text" id="cf-name" placeholder="Ad Soyad" required />
             </div>
-            <div class="form-group">
+            <div class="form-row">
               <label>E-posta</label>
               <input type="email" id="cf-email" placeholder="ornek@sirket.com" required />
             </div>
-            <div class="form-group">
+            <div class="form-row">
               <label>İlgilendiğiniz Hizmet</label>
               <select id="cf-service">
                 <option>Web Sitesi & Dijital Altyapı</option>
@@ -810,11 +837,11 @@
                 <option>Diğer</option>
               </select>
             </div>
-            <div class="form-group">
+            <div class="form-row">
               <label>Mesajınız</label>
               <textarea id="cf-msg" placeholder="Projenizi kısaca anlatın..."></textarea>
             </div>
-            <button type="submit" class="btn-form">Ücretsiz Danışma İste →</button>
+            <button type="submit" class="btn-submit">Ücretsiz Danışma İste →</button>
           </form>
         </div>
       </div>
@@ -824,7 +851,7 @@
   <!-- FOOTER -->
   <footer>
     <div class="container">
-      <div class="footer-inner">
+      <div class="footer-grid">
         <div class="footer-brand">
           <a href="#" class="logo">
             <div class="logo-icon">H</div>
@@ -859,13 +886,28 @@
   </footer>
 
   <script>
-    // Nav scroll effect
-    const nav = document.querySelector('nav');
+    // ── NAV SCROLL EFFECT ──
+    const nav = document.getElementById('main-nav');
     window.addEventListener('scroll', () => {
-      nav.style.borderBottomColor = window.scrollY > 50 ? 'rgba(201,168,76,0.15)' : 'rgba(255,255,255,0.06)';
-    });
+      nav.style.borderBottomColor = window.scrollY > 60
+        ? 'rgba(201,168,76,0.18)'
+        : 'rgba(255,255,255,0.06)';
+    }, { passive: true });
 
-    // Form handler
+    // ── SCROLL REVEAL ──
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── WHATSAPP FORM ──
     function handleForm(e) {
       e.preventDefault();
       const name = document.getElementById('cf-name').value.trim();
@@ -873,17 +915,13 @@
       const service = document.getElementById('cf-service').value;
       const msg = document.getElementById('cf-msg').value.trim() || '-';
       const text = 'Merhaba! Halitautomation.com üzerinden danışma talebi:\n\n' +
-        'Ad: ' + name + '\n' +
-        'E-posta: ' + email + '\n' +
-        'Hizmet: ' + service + '\n' +
-        'Mesaj: ' + msg;
-      const btn = e.target.querySelector('.btn-form');
+        'Ad: ' + name + '\nE-posta: ' + email + '\nHizmet: ' + service + '\nMesaj: ' + msg;
+      const btn = e.target.querySelector('.btn-submit');
       btn.textContent = '✓ WhatsApp açılıyor...';
-      btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
-      var link = document.createElement('a');
+      btn.style.background = 'linear-gradient(135deg,#22c55e,#16a34a)';
+      const link = document.createElement('a');
       link.href = 'https://wa.me/905551934807?text=' + encodeURIComponent(text);
-      link.target = '_blank';
-      link.rel = 'noopener';
+      link.target = '_blank'; link.rel = 'noopener';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -894,48 +932,50 @@
       }, 3000);
     }
 
-    // AOS init is called after aos.js loads at bottom of body
-
-    // ── HERO CANVAS PARTİKEL ──
-    (function(){
+    // ── HERO CANVAS PARTICLE NETWORK ──
+    (function () {
       const canvas = document.getElementById('hero-canvas');
-      if(!canvas) return;
+      if (!canvas) return;
       const ctx = canvas.getContext('2d');
-      let W, H, particles = [];
-      function resize(){ W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+      let W, H, pts = [];
+
+      function resize() {
+        W = canvas.width = canvas.offsetWidth;
+        H = canvas.height = canvas.offsetHeight;
+      }
       resize();
-      window.addEventListener('resize', resize);
-      const GOLD = 'rgba(201,168,76,';
-      for(let i=0;i<55;i++){
-        particles.push({
-          x: Math.random()*W, y: Math.random()*H,
-          r: Math.random()*1.8+0.4,
-          vx: (Math.random()-0.5)*0.35,
-          vy: (Math.random()-0.5)*0.35,
-          a: Math.random()*0.5+0.1
+      window.addEventListener('resize', resize, { passive: true });
+
+      for (let i = 0; i < 60; i++) {
+        pts.push({
+          x: Math.random() * W, y: Math.random() * H,
+          r: Math.random() * 1.6 + 0.3,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          a: Math.random() * 0.45 + 0.1
         });
       }
-      // Lines between close particles
-      function draw(){
-        ctx.clearRect(0,0,W,H);
-        for(let i=0;i<particles.length;i++){
-          const p=particles[i];
-          p.x+=p.vx; p.y+=p.vy;
-          if(p.x<0||p.x>W) p.vx*=-1;
-          if(p.y<0||p.y>H) p.vy*=-1;
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        for (let i = 0; i < pts.length; i++) {
+          const p = pts[i];
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0 || p.x > W) p.vx *= -1;
+          if (p.y < 0 || p.y > H) p.vy *= -1;
           ctx.beginPath();
-          ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-          ctx.fillStyle=GOLD+p.a+')';
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(201,168,76,' + p.a + ')';
           ctx.fill();
-          for(let j=i+1;j<particles.length;j++){
-            const q=particles[j];
-            const d=Math.hypot(p.x-q.x,p.y-q.y);
-            if(d<120){
+          for (let j = i + 1; j < pts.length; j++) {
+            const q = pts[j];
+            const d = Math.hypot(p.x - q.x, p.y - q.y);
+            if (d < 130) {
               ctx.beginPath();
-              ctx.moveTo(p.x,p.y);
-              ctx.lineTo(q.x,q.y);
-              ctx.strokeStyle=GOLD+(0.08*(1-d/120))+')';
-              ctx.lineWidth=0.5;
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(q.x, q.y);
+              ctx.strokeStyle = 'rgba(201,168,76,' + (0.07 * (1 - d / 130)) + ')';
+              ctx.lineWidth = 0.5;
               ctx.stroke();
             }
           }
@@ -944,11 +984,6 @@
       }
       draw();
     })();
-
-  </script>
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init({ duration: 650, easing: 'ease-out-cubic', once: true, offset: 60 });
   </script>
 </body>
 </html>
