@@ -170,7 +170,9 @@
       opacity: 0;
       transform: translateY(32px);
     }
-    .service-card.visible { opacity: 1; transform: translateY(0); }
+    .service-card.visible, .service-card.sr-visible { opacity: 1 !important; transform: translateY(0) !important; }
+    .sr-elem { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .sr-elem.sr-visible { opacity: 1 !important; transform: translateY(0) !important; }
     .service-card::before {
       content: '';
       position: absolute; top: 0; left: 0; right: 0; height: 2px;
@@ -945,36 +947,27 @@
       draw();
     })();
 
-    // Service cards stagger animation
-    const cardObserver = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          const cards = e.target.querySelectorAll('.service-card');
-          cards.forEach((card, i) => {
-            setTimeout(() => card.classList.add('visible'), i * 100);
-          });
-          cardObserver.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    const sg = document.querySelector('.services-grid');
-    if (sg) cardObserver.observe(sg);
-
-    // Scroll animations
-    const observer = new IntersectionObserver((entries) => {
+    // ── SCROLL REVEAL ──
+    const reveal = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
-          e.target.style.opacity = '1';
-          e.target.style.transform = 'translateY(0)';
+          e.target.classList.add('sr-visible');
+          reveal.unobserve(e.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-    document.querySelectorAll('.process-step, .testi-card').forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(20px)';
-      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-      observer.observe(el);
+    // Her service-card'a index bazlı delay ver
+    document.querySelectorAll('.service-card').forEach((el, i) => {
+      el.style.transitionDelay = (i * 80) + 'ms';
+      reveal.observe(el);
+    });
+
+    // Diğer elementler
+    document.querySelectorAll('.process-step, .testi-card, .sec-head, .stat, .about-grid > *, .product-card').forEach((el, i) => {
+      el.classList.add('sr-elem');
+      el.style.transitionDelay = (i * 60) + 'ms';
+      reveal.observe(el);
     });
   </script>
 </body>
