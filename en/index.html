@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Halit Automation — AI & Automation Agency</title>
+  <meta name="description" content="AI-powered automation solutions for your business. n8n workflows, WhatsApp bots, AI integration and sales automation." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #080c18;
+      --bg2: #0c1020;
+      --bg3: #111828;
+      --gold: #c9a84c;
+      --gold2: #e8c96a;
+      --gold-dim: rgba(201,168,76,0.1);
+      --gold-border: rgba(201,168,76,0.2);
+      --text: #eeeef2;
+      --text2: #8888a0;
+      --text3: #3a3a52;
+      --border: rgba(255,255,255,0.06);
+      --card: rgba(255,255,255,0.022);
+      --card-hover: rgba(255,255,255,0.04);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.6; }
+    ::selection { background: rgba(201,168,76,0.2); }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.from-left { transform: translateX(-36px); }
+    .reveal.from-right { transform: translateX(36px); }
+    .reveal.zoom { transform: scale(0.94); }
+    .reveal.visible { opacity: 1; transform: translate(0) scale(1); }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 200; padding: 18px 0; background: rgba(8,12,24,0.9); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border); transition: border-color 0.3s; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon { width: 34px; height: 34px; background: linear-gradient(135deg, var(--gold), var(--gold2)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: 900; color: var(--bg); }
+    .logo-text { font-size: 1.05rem; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
+    .logo-text span { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { font-size: 0.83rem; color: var(--text2); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .lang-btn { padding: 7px 14px; background: var(--card); border: 1px solid var(--border); border-radius: 7px; font-size: 0.78rem; font-weight: 600; color: var(--text2); text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+    .lang-btn:hover { border-color: var(--gold-border); color: var(--gold); }
+    .nav-cta { padding: 9px 20px; background: linear-gradient(135deg, var(--gold), var(--gold2)); color: var(--bg); border-radius: 8px; font-size: 0.83rem; font-weight: 700; text-decoration: none; transition: box-shadow 0.2s, opacity 0.2s; }
+    .nav-cta:hover { opacity: 0.88; box-shadow: 0 4px 20px rgba(201,168,76,0.3); }
+
+    /* HERO */
+    .hero { padding: 110px 0 120px; position: relative; overflow: hidden; }
+    #hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+    .hero-glow { position: absolute; inset: 0; pointer-events: none; z-index: 0; background: radial-gradient(ellipse 70% 50% at 50% -10%, rgba(201,168,76,0.07) 0%, transparent 65%), radial-gradient(ellipse 40% 30% at 80% 80%, rgba(201,168,76,0.04) 0%, transparent 60%); }
+    .hero-inner { position: relative; z-index: 1; text-align: center; max-width: 800px; margin: 0 auto; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(201,168,76,0.07); border: 1px solid var(--gold-border); color: var(--gold); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 7px 18px; border-radius: 100px; margin-bottom: 32px; }
+    .badge-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.35;transform:scale(0.75)} }
+    .hero h1 { font-size: clamp(2.8rem, 5.5vw, 4.4rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.04em; margin-bottom: 24px; }
+    .hero h1 em { font-style: normal; color: var(--gold); }
+    .hero-sub { font-size: 1.12rem; color: var(--text2); line-height: 1.85; margin-bottom: 44px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .hero-btns { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 72px; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 16px 34px; background: linear-gradient(135deg, var(--gold), var(--gold2)); color: var(--bg); border-radius: 10px; font-size: 1rem; font-weight: 700; text-decoration: none; transition: box-shadow 0.25s, transform 0.25s; }
+    .btn-primary:hover { box-shadow: 0 8px 36px rgba(201,168,76,0.38); transform: translateY(-2px); }
+    .btn-ghost { display: inline-flex; align-items: center; gap: 8px; padding: 16px 30px; background: transparent; border: 1px solid rgba(255,255,255,0.1); color: var(--text2); border-radius: 10px; font-size: 1rem; font-weight: 600; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.22); color: var(--text); }
+    .stats-bar { display: grid; grid-template-columns: repeat(4,1fr); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; background: var(--border); gap: 1px; }
+    .stat-item { background: var(--bg2); padding: 24px 20px; text-align: center; }
+    .stat-num { font-size: 2.1rem; font-weight: 900; letter-spacing: -0.04em; color: var(--gold); line-height: 1; }
+    .stat-lbl { font-size: 0.73rem; color: var(--text2); margin-top: 6px; }
+
+    /* SECTIONS */
+    .sec { padding: 100px 0; }
+    .sec-dark { background: var(--bg2); }
+    .sec-label { display: block; color: var(--gold); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; }
+    .sec-title { font-size: clamp(2rem, 3.5vw, 2.9rem); font-weight: 900; letter-spacing: -0.035em; line-height: 1.1; margin-bottom: 16px; }
+    .sec-title em { font-style: normal; color: var(--gold); }
+    .sec-sub { color: var(--text2); font-size: 0.96rem; line-height: 1.8; max-width: 520px; }
+    .sec-head { margin-bottom: 60px; }
+    .sec-head.center { text-align: center; }
+    .sec-head.center .sec-sub { margin: 0 auto; }
+    .divider { width: 44px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); border-radius: 2px; margin: 18px 0; }
+    .center .divider { margin: 18px auto; }
+
+    /* SERVICES */
+    .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
+    .service-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 34px 30px 26px; position: relative; overflow: hidden; transition: border-color 0.3s, background 0.3s, transform 0.3s, box-shadow 0.3s; }
+    .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--gold), var(--gold2)); opacity: 0; transition: opacity 0.3s; }
+    .service-card::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 40% at 50% -10%, rgba(201,168,76,0.06), transparent 65%); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .service-card:hover { border-color: var(--gold-border); background: var(--card-hover); transform: translateY(-5px); box-shadow: 0 24px 60px rgba(0,0,0,0.35), 0 0 40px rgba(201,168,76,0.05); }
+    .service-card:hover::before, .service-card:hover::after { opacity: 1; }
+    .sc-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 18px; }
+    .sc-icon { width: 52px; height: 52px; background: var(--gold-dim); border: 1px solid var(--gold-border); border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+    .sc-num { font-size: 2.6rem; font-weight: 900; letter-spacing: -0.05em; color: rgba(201,168,76,0.07); line-height: 1; transition: color 0.3s; }
+    .service-card:hover .sc-num { color: rgba(201,168,76,0.14); }
+    .service-card h3 { font-size: 1.04rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.02em; }
+    .service-card p { font-size: 0.82rem; color: var(--text2); line-height: 1.78; margin-bottom: 20px; }
+    .sc-divider { height: 1px; background: var(--border); margin-bottom: 16px; }
+    .sc-tools { display: flex; flex-wrap: wrap; gap: 7px; }
+    .sc-tool { display: inline-flex; align-items: center; gap: 5px; font-size: 0.67rem; font-weight: 700; padding: 4px 10px; background: rgba(255,255,255,0.035); border: 1px solid var(--border); border-radius: 6px; color: var(--text2); transition: border-color 0.2s, color 0.2s; }
+    .sc-tool svg { width: 11px; height: 11px; flex-shrink: 0; }
+    .service-card:hover .sc-tool { border-color: var(--gold-border); color: var(--text); }
+
+    /* PROCESS */
+    .process-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
+    .process-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 28px 22px; text-align: center; transition: border-color 0.3s, transform 0.3s; }
+    .process-card:hover { border-color: var(--gold-border); transform: translateY(-3px); }
+    .process-num { width: 44px; height: 44px; background: linear-gradient(135deg, var(--gold), var(--gold2)); color: var(--bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 900; margin: 0 auto 16px; }
+    .process-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .process-card p { font-size: 0.8rem; color: var(--text2); line-height: 1.65; }
+
+    /* PRODUCT */
+    .product-wrap { background: var(--card); border: 1px solid var(--gold-border); border-radius: 22px; padding: 52px; display: grid; grid-template-columns: 1fr 1fr; gap: 52px; align-items: center; position: relative; overflow: hidden; }
+    .product-wrap::before { content: ''; position: absolute; top: -120px; right: -120px; width: 360px; height: 360px; background: radial-gradient(circle, rgba(201,168,76,0.07), transparent 65%); pointer-events: none; }
+    .product-badge { display: inline-block; background: linear-gradient(135deg, var(--gold), var(--gold2)); color: var(--bg); font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; margin-bottom: 16px; }
+    .product-wrap h3 { font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 12px; }
+    .product-wrap h3 span { color: var(--gold); }
+    .product-wrap > div > p { font-size: 0.92rem; color: var(--text2); line-height: 1.8; margin-bottom: 26px; }
+    .product-feats { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .feat-row { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; }
+    .feat-check { width: 20px; height: 20px; flex-shrink: 0; background: var(--gold-dim); border: 1px solid var(--gold-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 0.6rem; font-weight: 700; }
+    .chat-mock { background: var(--bg3); border: 1px solid var(--border); border-radius: 16px; padding: 22px; }
+    .chat-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .online-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; }
+    .chat-title { font-size: 0.8rem; font-weight: 700; }
+    .chat-msg { padding: 10px 14px; border-radius: 10px; font-size: 0.77rem; line-height: 1.5; margin-bottom: 6px; }
+    .chat-msg.in { background: var(--bg2); color: var(--text2); border-bottom-left-radius: 3px; }
+    .chat-msg.out { background: linear-gradient(135deg, var(--gold), var(--gold2)); color: var(--bg); font-weight: 600; border-bottom-right-radius: 3px; margin-left: 18%; }
+    .chat-ts { font-size: 0.62rem; color: var(--text3); margin: 0 4px 8px; }
+    .chat-ts.r { text-align: right; }
+
+    /* TESTIMONIALS */
+    .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .testi-card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 28px; transition: border-color 0.3s, transform 0.3s; }
+    .testi-card:hover { border-color: var(--gold-border); transform: translateY(-3px); }
+    .testi-stars { color: var(--gold); font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 14px; }
+    .testi-text { font-size: 0.87rem; color: var(--text2); line-height: 1.78; margin-bottom: 20px; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-av { width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0; background: linear-gradient(135deg, var(--gold), var(--gold2)); display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 700; color: var(--bg); }
+    .testi-name { font-size: 0.87rem; font-weight: 700; }
+    .testi-role { font-size: 0.73rem; color: var(--text2); }
+
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .about-card { background: var(--bg3); border: 1px solid var(--gold-border); border-radius: 20px; padding: 40px; text-align: center; }
+    .about-avatar { width: 96px; height: 96px; border-radius: 20px; margin: 0 auto 20px; background: linear-gradient(135deg, var(--gold), var(--gold2)); display: flex; align-items: center; justify-content: center; font-size: 2.4rem; font-weight: 900; color: var(--bg); }
+    .about-name { font-size: 1.4rem; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 6px; }
+    .about-title-tag { font-size: 0.84rem; color: var(--gold); font-weight: 600; margin-bottom: 22px; }
+    .about-socials { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
+    .soc-btn { padding: 7px 15px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; font-size: 0.73rem; color: var(--text2); text-decoration: none; font-weight: 600; transition: border-color 0.2s, color 0.2s; }
+    .soc-btn:hover { border-color: var(--gold-border); color: var(--gold); }
+    .about-body h2 { font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 16px; }
+    .about-body h2 em { font-style: normal; color: var(--gold); }
+    .about-body p { font-size: 0.91rem; color: var(--text2); line-height: 1.85; margin-bottom: 14px; }
+    .skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .skill-tag { padding: 5px 13px; background: var(--card); border: 1px solid var(--border); border-radius: 7px; font-size: 0.76rem; color: var(--text2); font-weight: 500; }
+
+    /* CONTACT */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 52px; align-items: start; }
+    .contact-info h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 12px; }
+    .contact-info p { font-size: 0.9rem; color: var(--text2); line-height: 1.8; margin-bottom: 28px; }
+    .contact-list { display: flex; flex-direction: column; gap: 14px; }
+    .contact-row { display: flex; align-items: center; gap: 14px; }
+    .ci { width: 44px; height: 44px; flex-shrink: 0; background: var(--gold-dim); border: 1px solid var(--gold-border); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .ci-label { font-size: 0.7rem; color: var(--text2); margin-bottom: 2px; }
+    .ci-value { font-size: 0.9rem; font-weight: 600; }
+    .contact-form-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 32px; }
+    .form-row { margin-bottom: 16px; }
+    .form-row label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text2); margin-bottom: 7px; }
+    .form-row input, .form-row textarea, .form-row select { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 12px 15px; color: var(--text); font-size: 0.9rem; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.2s; }
+    .form-row input:focus, .form-row textarea:focus, .form-row select:focus { border-color: var(--gold-border); }
+    .form-row textarea { resize: vertical; min-height: 108px; }
+    .form-row select option { background: var(--bg2); }
+    .btn-submit { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--gold), var(--gold2)); color: var(--bg); border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s, box-shadow 0.2s; }
+    .btn-submit:hover { opacity: 0.88; box-shadow: 0 6px 24px rgba(201,168,76,0.3); }
+
+    /* CTA BAND */
+    .cta-band { text-align: center; background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(201,168,76,0.03) 100%); border-top: 1px solid var(--gold-border); border-bottom: 1px solid var(--gold-border); padding: 80px 0; }
+    .cta-band h2 { font-size: clamp(1.9rem, 3vw, 2.8rem); font-weight: 900; letter-spacing: -0.035em; margin-bottom: 16px; }
+    .cta-band h2 em { font-style: normal; color: var(--gold); }
+    .cta-band p { font-size: 1rem; color: var(--text2); margin-bottom: 36px; }
+
+    /* FOOTER */
+    footer { background: var(--bg2); border-top: 1px solid var(--border); padding: 52px 0 32px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 52px; margin-bottom: 44px; }
+    .footer-brand p { font-size: 0.83rem; color: var(--text2); line-height: 1.75; margin-top: 12px; max-width: 270px; }
+    .footer-col h4 { font-size: 0.83rem; font-weight: 700; color: var(--gold); margin-bottom: 16px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a { font-size: 0.8rem; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--text); }
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; }
+    .footer-bottom p { font-size: 0.76rem; color: var(--text3); }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) { .process-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .stats-bar { grid-template-columns: repeat(2,1fr); }
+      .services-grid, .testi-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .product-wrap { grid-template-columns: 1fr; padding: 32px; gap: 32px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+    @media (max-width: 580px) { .process-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">H</div>
+        <div class="logo-text">Halit <span>Automation</span></div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#product">Product</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="../index.html" class="lang-btn">🇹🇷 TR</a>
+        <a href="#contact" class="nav-cta">Free Consultation</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-glow"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-badge reveal">
+          <span class="badge-dot"></span>AI & Automation Agency — Turkey
+        </div>
+        <h1 class="reveal" style="transition-delay:80ms">
+          Scale Your Business with <em>Artificial Intelligence</em>
+        </h1>
+        <p class="hero-sub reveal" style="transition-delay:160ms">
+          We automate repetitive tasks, boost your sales,<br>and serve your customers 24/7 — without extra staff.
+        </p>
+        <div class="hero-btns reveal" style="transition-delay:240ms">
+          <a href="#contact" class="btn-primary">Get Free Consultation →</a>
+          <a href="#services" class="btn-ghost">See Services</a>
+        </div>
+        <div class="stats-bar reveal" style="transition-delay:320ms">
+          <div class="stat-item"><div class="stat-num">50+</div><div class="stat-lbl">Completed Projects</div></div>
+          <div class="stat-item"><div class="stat-num">90%</div><div class="stat-lbl">Time Saved</div></div>
+          <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-lbl">AI-Powered Service</div></div>
+          <div class="stat-item"><div class="stat-num">100+</div><div class="stat-lbl">API Integrations</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="sec sec-dark" id="services">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-label">Our Services</span>
+        <h2 class="sec-title">Tailored Solutions <em>for Your Business</em></h2>
+        <div class="divider"></div>
+        <p class="sec-sub">Every business has unique needs. We design and implement automation solutions built specifically for you.</p>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card reveal" style="transition-delay:0ms">
+          <div class="sc-top"><div class="sc-icon">🌐</div><span class="sc-num">01</span></div>
+          <h3>Website & Digital Infrastructure</h3>
+          <p>From idea to launch — design, code, domain, hosting, secure database. GDPR-compliant, turnkey digital presence delivered fast.</p>
+          <div class="sc-divider"></div>
+          <div class="sc-tools">
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#3ECF8E"><circle cx="12" cy="12" r="10"/><text x="6" y="16" font-size="9" fill="#fff" font-weight="bold">SB</text></svg>Supabase</span>
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#4285F4"><rect width="24" height="24" rx="4"/><text x="5" y="17" font-size="12" fill="#fff" font-weight="bold">V</text></svg>Vercel</span>
+            <span class="sc-tool">🔒 GDPR</span>
+            <span class="sc-tool">⚡ Fast Delivery</span>
+          </div>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay:80ms">
+          <div class="sc-top"><div class="sc-icon">⚙️</div><span class="sc-num">02</span></div>
+          <h3>Workflow Automation</h3>
+          <p>Stop doing repetitive work. Invoices, notifications, reports, order tracking — we build it with n8n, you just see the results.</p>
+          <div class="sc-divider"></div>
+          <div class="sc-tools">
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#EA4B00"><circle cx="12" cy="12" r="10"/><text x="5.5" y="16" font-size="8" fill="#fff" font-weight="bold">n8n</text></svg>n8n</span>
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#6D00CC"><rect width="24" height="24" rx="4"/><text x="3" y="16" font-size="8" fill="#fff" font-weight="bold">Make</text></svg>Make</span>
+            <span class="sc-tool">🔗 API</span>
+            <span class="sc-tool">📧 Gmail / Sheets</span>
+          </div>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay:160ms">
+          <div class="sc-top"><div class="sc-icon">🎙️</div><span class="sc-num">03</span></div>
+          <h3>AI Assistant & Voice Agent</h3>
+          <p>AI that replies on WhatsApp, answers calls, and books appointments. Your customers think they're talking to a real person — but it works 24/7, never tires.</p>
+          <div class="sc-divider"></div>
+          <div class="sc-tools">
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#25D366"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.06L2 22l5.09-1.34C8.47 21.52 10.19 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>WhatsApp</span>
+            <span class="sc-tool">🧠 Claude / GPT</span>
+            <span class="sc-tool">🎙️ Voice Bot</span>
+            <span class="sc-tool">💬 Telegram</span>
+          </div>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay:0ms">
+          <div class="sc-top"><div class="sc-icon">📈</div><span class="sc-num">04</span></div>
+          <h3>Sales & CRM Management</h3>
+          <p>Automatically follow up leads, send proposals on time, and automate your entire sales pipeline. Less effort, more revenue.</p>
+          <div class="sc-divider"></div>
+          <div class="sc-tools">
+            <span class="sc-tool">📊 CRM Pipeline</span>
+            <span class="sc-tool">📩 Auto Email</span>
+            <span class="sc-tool">🎯 Lead Scoring</span>
+            <span class="sc-tool">📋 Proposal Automation</span>
+          </div>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay:80ms">
+          <div class="sc-top"><div class="sc-icon">🎯</div><span class="sc-num">05</span></div>
+          <h3>Ads & Growth</h3>
+          <p>Reach the right people on Instagram, Facebook and Google. We convert your budget into real customers — sales-focused campaigns only.</p>
+          <div class="sc-divider"></div>
+          <div class="sc-tools">
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.26h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>Meta Ads</span>
+            <span class="sc-tool"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Google Ads</span>
+            <span class="sc-tool">🔄 Retargeting</span>
+          </div>
+        </div>
+
+        <div class="service-card reveal" style="transition-delay:160ms">
+          <div class="sc-top"><div class="sc-icon">🎬</div><span class="sc-num">06</span></div>
+          <h3>Content & Visibility</h3>
+          <p>UGC-style videos that sell, AI avatar Reels and TikToks that grow your brand. No studio needed — the algorithm loves it.</p>
+          <div class="sc-divider"></div>
+          <div class="sc-tools">
+            <span class="sc-tool">🎭 AI Avatar</span>
+            <span class="sc-tool">📱 UGC Video</span>
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="url(#igr2)"><defs><linearGradient id="igr2" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="50%" stop-color="#e6683c"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs><rect width="24" height="24" rx="6"/><rect x="6" y="6" width="12" height="12" rx="3" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="3" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="17" cy="7" r="1" fill="#fff"/></svg>Reels</span>
+            <span class="sc-tool">🎵 TikTok</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="sec" id="process">
+    <div class="container">
+      <div class="sec-head center reveal">
+        <span class="sec-label">How It Works</span>
+        <h2 class="sec-title">Automation in <em>4 Simple Steps</em></h2>
+        <div class="divider"></div>
+        <p class="sec-sub">We simplified complex processes into 4 clear steps. You'll see first results within 1 week.</p>
+      </div>
+      <div class="process-grid">
+        <div class="process-card reveal" style="transition-delay:0ms">
+          <div class="process-num">1</div>
+          <h3>Discovery & Analysis</h3>
+          <p>We analyze your workflows, pain points, and goals together.</p>
+        </div>
+        <div class="process-card reveal" style="transition-delay:100ms">
+          <div class="process-num">2</div>
+          <h3>Solution Design</h3>
+          <p>We design a custom automation architecture — which tools, how they integrate.</p>
+        </div>
+        <div class="process-card reveal" style="transition-delay:200ms">
+          <div class="process-num">3</div>
+          <h3>Build & Test</h3>
+          <p>We build, test, and refine until everything is production-ready.</p>
+        </div>
+        <div class="process-card reveal" style="transition-delay:300ms">
+          <div class="process-num">4</div>
+          <h3>Support & Optimize</h3>
+          <p>We stay by your side after launch. Continuous monitoring and improvement.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCT -->
+  <section class="sec sec-dark" id="product">
+    <div class="container">
+      <div class="sec-head reveal">
+        <span class="sec-label">Our Own Product</span>
+        <h2 class="sec-title">Meet: <em>Halflow</em></h2>
+        <div class="divider"></div>
+        <p class="sec-sub">Our ready-to-deploy AI digital secretary solution built for small businesses.</p>
+      </div>
+      <div class="product-wrap reveal zoom">
+        <div>
+          <span class="product-badge">Ready Product</span>
+          <h3><span>Halflow</span> — 24/7 Digital Secretary</h3>
+          <p>Answer WhatsApp messages instantly with AI. Book appointments, auto-reply to FAQs, and get instant alerts for critical messages.</p>
+          <div class="product-feats">
+            <div class="feat-row"><span class="feat-check">✓</span>24/7 automatic WhatsApp replies</div>
+            <div class="feat-row"><span class="feat-check">✓</span>AI message classification</div>
+            <div class="feat-row"><span class="feat-check">✓</span>Appointment management</div>
+            <div class="feat-row"><span class="feat-check">✓</span>Instant alerts for critical messages</div>
+            <div class="feat-row"><span class="feat-check">✓</span>Setup in 1 day</div>
+          </div>
+          <a href="https://halflow.info" target="_blank" class="btn-primary" style="display:inline-flex;">Explore Halflow →</a>
+        </div>
+        <div class="chat-mock">
+          <div class="chat-header">
+            <div class="online-dot"></div>
+            <span class="chat-title">Halflow Assistant — Online</span>
+          </div>
+          <div class="chat-msg in">Hi, can I book an appointment for tomorrow at 2pm?</div>
+          <div class="chat-ts">Customer • 14:23</div>
+          <div class="chat-msg out">Hi! 2pm is available. Your appointment is confirmed, confirmation sent. ✅</div>
+          <div class="chat-ts r">Halflow • 14:23 • Automatic</div>
+          <div class="chat-msg in">Thanks, that was fast!</div>
+          <div class="chat-ts">Customer • 14:24</div>
+          <div class="chat-msg out">Our pleasure! Let me know if you need to reschedule 😊</div>
+          <div class="chat-ts r">Halflow • 14:24 • Automatic</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="sec" id="reviews">
+    <div class="container">
+      <div class="sec-head center reveal">
+        <span class="sec-label">Client Reviews</span>
+        <h2 class="sec-title">What Our <em>Clients Say</em></h2>
+        <div class="divider"></div>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card reveal" style="transition-delay:0ms">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"After setting up the WhatsApp bot, 100% of weekend messages get instant replies. No more Monday morning backlog of 20 unanswered messages."</p>
+          <div class="testi-author">
+            <div class="testi-av">A</div>
+            <div><div class="testi-name">Ayse K.</div><div class="testi-role">Beauty Salon Owner, Antalya</div></div>
+          </div>
+        </div>
+        <div class="testi-card reveal" style="transition-delay:100ms">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Our appointment system, invoice automation and client follow-up are now fully automated. The team focuses on what matters. Brilliant investment."</p>
+          <div class="testi-author">
+            <div class="testi-av">M</div>
+            <div><div class="testi-name">Mehmet A.</div><div class="testi-role">Clinic Director, Istanbul</div></div>
+          </div>
+        </div>
+        <div class="testi-card reveal" style="transition-delay:200ms">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"We set up a lead capture system and now get 20-30 new prospects every day. Sales grew 60% in just 3 months."</p>
+          <div class="testi-author">
+            <div class="testi-av">S</div>
+            <div><div class="testi-name">Selin D.</div><div class="testi-role">E-commerce Founder, Izmir</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="sec sec-dark" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-card reveal from-left">
+          <div class="about-avatar">H</div>
+          <div class="about-name">Halit Cerben</div>
+          <div class="about-title-tag">Founder & AI Automation Expert</div>
+          <div class="about-socials">
+            <a href="mailto:info@halitautomation.com" class="soc-btn">✉ Email</a>
+            <a href="https://www.linkedin.com/in/halit-cerben-7515b2ba/" target="_blank" rel="noopener" class="soc-btn">in LinkedIn</a>
+            <a href="https://www.instagram.com/halflow.i/" target="_blank" rel="noopener" class="soc-btn">📷 Instagram</a>
+            <a href="https://www.facebook.com/cerben1" target="_blank" rel="noopener" class="soc-btn">f Facebook</a>
+          </div>
+        </div>
+        <div class="about-body reveal from-right">
+          <h2>Technology + <em>Human Experience</em></h2>
+          <div class="divider"></div>
+          <p>With a background in education, hospitality and business, I truly understand what your customers need. I combine that experience with AI and automation to help businesses grow.</p>
+          <p>I turn complex technical systems into solutions that business owners can understand and use immediately. Not just setup — results-driven work.</p>
+          <div class="skills">
+            <span class="skill-tag">n8n Advanced</span>
+            <span class="skill-tag">Claude API</span>
+            <span class="skill-tag">OpenAI GPT-4o</span>
+            <span class="skill-tag">WhatsApp API</span>
+            <span class="skill-tag">Supabase</span>
+            <span class="skill-tag">Google Workspace</span>
+            <span class="skill-tag">Instantly.ai</span>
+            <span class="skill-tag">100+ APIs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <div class="cta-band reveal">
+    <div class="container">
+      <h2>Ready to <em>Get Started?</em></h2>
+      <p>First consultation is completely free. I'll get back to you within 24 hours.</p>
+      <a href="#contact" class="btn-primary">Book Free Consultation →</a>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <section class="sec" id="contact">
+    <div class="container">
+      <div class="sec-head center reveal">
+        <span class="sec-label">Contact</span>
+        <h2 class="sec-title">Let's Talk About <em>Your Project</em></h2>
+        <div class="divider"></div>
+        <p class="sec-sub">Fill in the form and I'll reach out via WhatsApp right away.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal from-left">
+          <h3>Get in Touch</h3>
+          <p>Tell me about your project and we'll find the best solution together. First meeting is completely free.</p>
+          <div class="contact-list">
+            <div class="contact-row">
+              <div class="ci">✉</div>
+              <div><div class="ci-label">Email</div><div class="ci-value">info@halitautomation.com</div></div>
+            </div>
+            <div class="contact-row">
+              <div class="ci">💬</div>
+              <div><div class="ci-label">WhatsApp</div><div class="ci-value">+90 555 193 48 07</div></div>
+            </div>
+            <div class="contact-row">
+              <div class="ci">📍</div>
+              <div><div class="ci-label">Location</div><div class="ci-value">Antalya, Turkey (Remote Service)</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form-wrap reveal from-right">
+          <form onsubmit="handleForm(event)">
+            <div class="form-row">
+              <label>Your Name</label>
+              <input type="text" id="cf-name" placeholder="Full Name" required />
+            </div>
+            <div class="form-row">
+              <label>Email</label>
+              <input type="email" id="cf-email" placeholder="you@company.com" required />
+            </div>
+            <div class="form-row">
+              <label>Service of Interest</label>
+              <select id="cf-service">
+                <option>Website & Digital Infrastructure</option>
+                <option>Workflow Automation</option>
+                <option>AI Assistant & Voice Agent</option>
+                <option>Sales & CRM Management</option>
+                <option>Ads & Growth</option>
+                <option>Content & Visibility</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>Message</label>
+              <textarea id="cf-msg" placeholder="Briefly describe your project..."></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Get Free Consultation →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <div class="logo-icon">H</div>
+            <div class="logo-text">Halit <span>Automation</span></div>
+          </a>
+          <p>AI-powered automation solutions for businesses. Remote service across Turkey and worldwide.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services">Workflow Automation</a></li>
+            <li><a href="#services">WhatsApp Bot</a></li>
+            <li><a href="#services">AI Integration</a></li>
+            <li><a href="#services">Sales Automation</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Links</h4>
+          <ul>
+            <li><a href="https://halflow.info" target="_blank">Halflow.info</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="mailto:info@halitautomation.com">Email</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Halit Automation. All rights reserved.</p>
+        <p>info@halitautomation.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // NAV SCROLL
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.style.borderBottomColor = window.scrollY > 60 ? 'rgba(201,168,76,0.18)' : 'rgba(255,255,255,0.06)';
+    }, { passive: true });
+
+    // SCROLL REVEAL
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // WHATSAPP FORM
+    function handleForm(e) {
+      e.preventDefault();
+      const name = document.getElementById('cf-name').value.trim();
+      const email = document.getElementById('cf-email').value.trim();
+      const service = document.getElementById('cf-service').value;
+      const msg = document.getElementById('cf-msg').value.trim() || '-';
+      const text = 'Hello! Consultation request from halitautomation.com:\n\nName: ' + name + '\nEmail: ' + email + '\nService: ' + service + '\nMessage: ' + msg;
+      const btn = e.target.querySelector('.btn-submit');
+      btn.textContent = '✓ Opening WhatsApp...';
+      btn.style.background = 'linear-gradient(135deg,#22c55e,#16a34a)';
+      const link = document.createElement('a');
+      link.href = 'https://wa.me/905551934807?text=' + encodeURIComponent(text);
+      link.target = '_blank'; link.rel = 'noopener';
+      document.body.appendChild(link); link.click(); document.body.removeChild(link);
+      setTimeout(() => { btn.textContent = 'Get Free Consultation →'; btn.style.background = ''; e.target.reset(); }, 3000);
+    }
+
+    // HERO CANVAS
+    (function () {
+      const canvas = document.getElementById('hero-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let W, H, pts = [];
+      function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+      resize();
+      window.addEventListener('resize', resize, { passive: true });
+      for (let i = 0; i < 60; i++) pts.push({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.6+0.3, vx: (Math.random()-0.5)*0.3, vy: (Math.random()-0.5)*0.3, a: Math.random()*0.45+0.1 });
+      function draw() {
+        ctx.clearRect(0,0,W,H);
+        for (let i = 0; i < pts.length; i++) {
+          const p = pts[i];
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0 || p.x > W) p.vx *= -1;
+          if (p.y < 0 || p.y > H) p.vy *= -1;
+          ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fillStyle = 'rgba(201,168,76,'+p.a+')'; ctx.fill();
+          for (let j = i+1; j < pts.length; j++) {
+            const q = pts[j], d = Math.hypot(p.x-q.x,p.y-q.y);
+            if (d < 130) { ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.strokeStyle='rgba(201,168,76,'+(0.07*(1-d/130))+')'; ctx.lineWidth=0.5; ctx.stroke(); }
+          }
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+  </script>
+</body>
+</html>
