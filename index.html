@@ -167,12 +167,9 @@
       transition: all 0.35s cubic-bezier(.22,.68,0,1.2);
       position: relative;
       overflow: hidden;
-      opacity: 0;
-      transform: translateY(32px);
     }
-    .service-card.visible, .service-card.sr-visible { opacity: 1 !important; transform: translateY(0) !important; }
-    .sr-elem { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .sr-elem.sr-visible { opacity: 1 !important; transform: translateY(0) !important; }
+    .sr-elem { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .sr-elem.sr-visible { opacity: 1; transform: translateY(0); }
     .service-card::before {
       content: '';
       position: absolute; top: 0; left: 0; right: 0; height: 2px;
@@ -957,16 +954,10 @@
       });
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-    // Her service-card'a index bazlı delay ver
-    document.querySelectorAll('.service-card').forEach((el, i) => {
-      el.style.transitionDelay = (i * 80) + 'ms';
-      reveal.observe(el);
-    });
-
-    // Diğer elementler
-    document.querySelectorAll('.process-step, .testi-card, .sec-head, .stat, .about-grid > *, .product-card').forEach((el, i) => {
+    // Tüm animasyonlu elementler
+    document.querySelectorAll('.service-card, .process-step, .testi-card, .stat, .about-grid > *, .product-card, .sec-head').forEach((el, i) => {
       el.classList.add('sr-elem');
-      el.style.transitionDelay = (i * 60) + 'ms';
+      el.style.transitionDelay = (i % 6 * 90) + 'ms';
       reveal.observe(el);
     });
   </script>
