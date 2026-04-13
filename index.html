@@ -30,6 +30,24 @@
 
     .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
 
+    /* ─── HERO ANIMATIONS ─── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-anim {
+      opacity: 0;
+      animation-fill-mode: forwards;
+      animation-timing-function: cubic-bezier(0.16,1,0.3,1);
+      animation-duration: 0.75s;
+    }
+    .hero-anim.down { animation-name: fadeDown; }
+    .hero-anim.up   { animation-name: fadeUp; }
+
     /* ─── SCROLL REVEAL ─── */
     .reveal {
       opacity: 0;
@@ -501,20 +519,20 @@
     <div class="hero-glow"></div>
     <div class="container">
       <div class="hero-inner">
-        <div class="hero-badge reveal">
+        <div class="hero-badge hero-anim down" style="animation-delay:0.1s">
           <span class="badge-dot"></span>AI & Otomasyon Ajansı — Türkiye
         </div>
-        <h1 class="reveal" style="transition-delay:80ms">
+        <h1 class="hero-anim up" style="animation-delay:0.25s">
           İşletmenizi <em>Yapay Zeka</em> ile Büyütün
         </h1>
-        <p class="hero-sub reveal" style="transition-delay:160ms">
+        <p class="hero-sub hero-anim up" style="animation-delay:0.4s">
           Tekrarlayan işleri otomatize eder, satışlarınızı artırır,<br>müşterilerinize 7/24 hizmet veririz.
         </p>
-        <div class="hero-btns reveal" style="transition-delay:240ms">
+        <div class="hero-btns hero-anim up" style="animation-delay:0.55s">
           <a href="#iletisim" class="btn-primary">Ücretsiz Danışma Al →</a>
           <a href="#hizmetler" class="btn-ghost">Hizmetleri Gör</a>
         </div>
-        <div class="stats-bar reveal" style="transition-delay:320ms">
+        <div class="stats-bar hero-anim up" style="animation-delay:0.7s">
           <div class="stat-item"><div class="stat-num">50+</div><div class="stat-lbl">Tamamlanan Proje</div></div>
           <div class="stat-item"><div class="stat-num">%90</div><div class="stat-lbl">Zaman Tasarrufu</div></div>
           <div class="stat-item"><div class="stat-num">7/24</div><div class="stat-lbl">AI Destekli Hizmet</div></div>
@@ -898,17 +916,17 @@
     }, { passive: true });
 
     // ── SCROLL REVEAL ──
-    const revealEls = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-    revealEls.forEach(el => observer.observe(el));
+    setTimeout(function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }, 200);
 
     // ── WHATSAPP FORM ──
     function handleForm(e) {

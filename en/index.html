@@ -29,6 +29,13 @@
     ::selection { background: rgba(201,168,76,0.2); }
     .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
 
+    /* HERO ANIMATIONS */
+    @keyframes fadeDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeUp   { from{opacity:0;transform:translateY(32px)}  to{opacity:1;transform:translateY(0)} }
+    .hero-anim { opacity:0; animation-fill-mode:forwards; animation-timing-function:cubic-bezier(0.16,1,0.3,1); animation-duration:0.75s; }
+    .hero-anim.down { animation-name:fadeDown; }
+    .hero-anim.up   { animation-name:fadeUp; }
+
     /* REVEAL */
     .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); }
     .reveal.from-left { transform: translateX(-36px); }
@@ -236,20 +243,20 @@
     <div class="hero-glow"></div>
     <div class="container">
       <div class="hero-inner">
-        <div class="hero-badge reveal">
+        <div class="hero-badge hero-anim down" style="animation-delay:0.1s">
           <span class="badge-dot"></span>AI & Automation Agency — Turkey
         </div>
-        <h1 class="reveal" style="transition-delay:80ms">
+        <h1 class="hero-anim up" style="animation-delay:0.25s">
           Scale Your Business with <em>Artificial Intelligence</em>
         </h1>
-        <p class="hero-sub reveal" style="transition-delay:160ms">
+        <p class="hero-sub hero-anim up" style="animation-delay:0.4s">
           We automate repetitive tasks, boost your sales,<br>and serve your customers 24/7 — without extra staff.
         </p>
-        <div class="hero-btns reveal" style="transition-delay:240ms">
+        <div class="hero-btns hero-anim up" style="animation-delay:0.55s">
           <a href="#contact" class="btn-primary">Get Free Consultation →</a>
           <a href="#services" class="btn-ghost">See Services</a>
         </div>
-        <div class="stats-bar reveal" style="transition-delay:320ms">
+        <div class="stats-bar hero-anim up" style="animation-delay:0.7s">
           <div class="stat-item"><div class="stat-num">50+</div><div class="stat-lbl">Completed Projects</div></div>
           <div class="stat-item"><div class="stat-num">90%</div><div class="stat-lbl">Time Saved</div></div>
           <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-lbl">AI-Powered Service</div></div>
@@ -613,15 +620,17 @@
     }, { passive: true });
 
     // SCROLL REVEAL
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    setTimeout(function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }, 200);
 
     // WHATSAPP FORM
     function handleForm(e) {
