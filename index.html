@@ -700,15 +700,15 @@
           <form onsubmit="handleForm(event)">
             <div class="form-group">
               <label>Adınız</label>
-              <input type="text" placeholder="Ad Soyad" required />
+              <input type="text" id="cf-name" placeholder="Ad Soyad" required />
             </div>
             <div class="form-group">
               <label>E-posta</label>
-              <input type="email" placeholder="ornek@sirket.com" required />
+              <input type="email" id="cf-email" placeholder="ornek@sirket.com" required />
             </div>
             <div class="form-group">
               <label>İlgilendiğiniz Hizmet</label>
-              <select>
+              <select id="cf-service">
                 <option>Workflow Otomasyonu</option>
                 <option>WhatsApp / Chatbot</option>
                 <option>AI Entegrasyonu</option>
@@ -719,7 +719,7 @@
             </div>
             <div class="form-group">
               <label>Mesajınız</label>
-              <textarea placeholder="Projenizi kısaca anlatın..."></textarea>
+              <textarea id="cf-msg" placeholder="Projenizi kısaca anlatın..."></textarea>
             </div>
             <button type="submit" class="btn-form">Ücretsiz Danışma İste →</button>
           </form>
@@ -775,9 +775,25 @@
     // Form handler
     function handleForm(e) {
       e.preventDefault();
+      const name = document.getElementById('cf-name').value.trim();
+      const email = document.getElementById('cf-email').value.trim();
+      const service = document.getElementById('cf-service').value;
+      const msg = document.getElementById('cf-msg').value.trim() || '-';
+      const text = 'Merhaba! Halitautomation.com üzerinden danışma talebi:\n\n' +
+        'Ad: ' + name + '\n' +
+        'E-posta: ' + email + '\n' +
+        'Hizmet: ' + service + '\n' +
+        'Mesaj: ' + msg;
       const btn = e.target.querySelector('.btn-form');
-      btn.textContent = '✓ Mesajınız alındı!';
+      btn.textContent = '✓ WhatsApp açılıyor...';
       btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+      var link = document.createElement('a');
+      link.href = 'https://wa.me/905551934807?text=' + encodeURIComponent(text);
+      link.target = '_blank';
+      link.rel = 'noopener';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
       setTimeout(() => {
         btn.textContent = 'Ücretsiz Danışma İste →';
         btn.style.background = '';
