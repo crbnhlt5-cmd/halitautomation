@@ -3,671 +3,804 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Halflow — Yapay Zeka Destekli Okul Yonetim Sistemi</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <title>Halit Automation — AI & Otomasyon Ajansı</title>
+  <meta name="description" content="İşletmeniz için yapay zeka destekli otomasyon çözümleri. n8n workflow, WhatsApp bot, AI entegrasyon ve satış otomasyonu." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --accent: #e91e8c;
-      --accent-dark: #c4177a;
-      --accent-light: #f540a0;
-      --glow: rgba(233,30,140,0.15);
-      --bg: #080808;
-      --bg2: #0c0c0f;
-      --surface: #111114;
-      --border: rgba(255,255,255,0.08);
-      --border-accent: rgba(233,30,140,0.25);
-      --text: #f5f5f5;
-      --text2: #a0a0a0;
-      --text3: #555;
-      --card: #111;
-      --card-border: #222;
-      --radius: 12px;
+      --navy: #0a0e1a;
+      --navy2: #0f1525;
+      --navy3: #141c30;
+      --gold: #c9a84c;
+      --gold2: #e8c96a;
+      --gold-glow: rgba(201,168,76,0.12);
+      --gold-border: rgba(201,168,76,0.25);
+      --text: #e8e8f0;
+      --text2: #8a8a9e;
+      --text3: #4a4a60;
+      --border: rgba(255,255,255,0.06);
+      --card: rgba(255,255,255,0.025);
+      --card2: rgba(255,255,255,0.045);
     }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.6; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--text); overflow-x: hidden; }
+    ::selection { background: rgba(201,168,76,0.25); }
 
-    /* === NAV === */
-    nav { position: sticky; top: 0; z-index: 100; background: rgba(8,8,8,0.88); backdrop-filter: blur(18px); border-bottom: 1px solid transparent; transition: border-color 0.3s; padding: 18px 0; }
-    nav.scrolled { border-color: var(--border); }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 28px; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      padding: 20px 0;
+      background: rgba(10,14,26,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; }
-    .logo { font-size: 1.35rem; font-weight: 900; letter-spacing: -0.04em; color: var(--text); text-decoration: none; }
-    .logo em { color: var(--accent); font-style: normal; }
-    .nav-links { display: flex; align-items: center; gap: 28px; }
-    .nav-links a { font-size: 0.85rem; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--gold), var(--gold2)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 900; color: var(--navy); }
+    .logo-text { font-size: 1.1rem; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
+    .logo-text span { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 0.85rem; color: var(--text2); text-decoration: none; transition: color 0.2s; font-weight: 500; }
     .nav-links a:hover { color: var(--text); }
-    .btn-nav { display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; background: var(--accent); color: #fff; border-radius: 8px; font-size: 0.875rem; font-weight: 600; text-decoration: none; transition: all 0.2s; }
-    .btn-nav:hover { background: var(--accent-dark); box-shadow: 0 4px 20px rgba(233,30,140,0.4); }
-    .hamburger { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; }
-    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text2); border-radius: 2px; }
+    .btn-nav {
+      padding: 9px 22px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-nav:hover { opacity: 0.9; box-shadow: 0 4px 20px rgba(201,168,76,0.35); }
 
-    /* === HERO === */
-    .hero { padding: 80px 0 100px; position: relative; overflow: hidden; }
-    .hero-glow { position: absolute; top: -120px; left: 50%; transform: translateX(-50%); width: 900px; height: 500px; background: radial-gradient(ellipse, rgba(233,30,140,0.08) 0%, transparent 65%); pointer-events: none; }
-    .hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-    .hero-tag { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--border-accent); background: rgba(233,30,140,0.06); color: var(--accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 14px; border-radius: 100px; margin-bottom: 24px; }
-    .hero-tag::before { content:''; width:5px; height:5px; background:var(--accent); border-radius:50%; animation: blink 1.8s infinite; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-    h1 { font-size: clamp(2.2rem, 4.5vw, 3.6rem); font-weight: 900; line-height: 1.1; letter-spacing: -0.04em; margin-bottom: 20px; }
-    h1 span { color: var(--accent); }
-    .hero-sub { font-size: 1.05rem; color: var(--text2); line-height: 1.75; margin-bottom: 32px; max-width: 500px; }
-    .cta-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
-    .btn-main { display: inline-flex; align-items: center; gap: 8px; padding: 15px 30px; background: var(--accent); color: #fff; border-radius: 10px; font-size: 1rem; font-weight: 700; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; font-family: 'Inter', sans-serif; }
-    .btn-main:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(233,30,140,0.4); }
-    .btn-ghost { display: inline-flex; align-items: center; gap: 8px; padding: 15px 24px; background: transparent; color: var(--text2); border: 1px solid var(--border); border-radius: 10px; font-size: 1rem; font-weight: 600; text-decoration: none; transition: all 0.2s; }
-    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.18); }
-    .hero-fine { font-size: 0.76rem; color: var(--text2); display: flex; align-items: center; gap: 6px; }
-    .hero-fine::before { content:'✓'; color: var(--accent); font-weight: 700; }
+    /* ── HERO ── */
+    .hero {
+      padding: 96px 0 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; text-align: center; max-width: 780px; margin: 0 auto; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid var(--gold-border);
+      color: var(--gold);
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 100px;
+      margin-bottom: 28px;
+    }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
 
-    /* hero visual */
-    .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
-    .hero-mockup { width: 100%; max-width: 480px; aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(233,30,140,0.12) 0%, rgba(100,40,200,0.08) 50%, rgba(233,30,140,0.06) 100%); border: 1px solid var(--border-accent); border-radius: 20px; padding: 32px; display: flex; flex-direction: column; gap: 16px; }
-    .mockup-bar { height: 12px; border-radius: 6px; background: rgba(255,255,255,0.06); }
-    .mockup-bar.short { width: 40%; }
-    .mockup-bar.med { width: 65%; }
-    .mockup-row { display: flex; gap: 12px; flex: 1; }
-    .mockup-card { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; }
-    .mockup-card .mc-icon { font-size: 1.6rem; margin-bottom: 8px; }
-    .mockup-card .mc-title { font-size: 0.7rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-    .mockup-card .mc-val { font-size: 1.3rem; font-weight: 900; color: var(--accent); }
-    .mockup-card .mc-bar { height: 4px; background: rgba(233,30,140,0.3); border-radius: 2px; margin-top: 8px; }
-    .mockup-card .mc-bar-fill { height: 100%; border-radius: 2px; background: var(--accent); }
+    h1 {
+      font-size: clamp(2.6rem, 5vw, 4.2rem);
+      font-weight: 900;
+      line-height: 1.06;
+      letter-spacing: -0.04em;
+      margin-bottom: 22px;
+    }
+    h1 em { font-style: normal; color: var(--gold); }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text2);
+      line-height: 1.8;
+      margin-bottom: 40px;
+      max-width: 580px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-btns { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 60px; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 15px 32px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy);
+      border-radius: 10px;
+      font-size: 1rem; font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover { box-shadow: 0 8px 32px rgba(201,168,76,0.4); transform: translateY(-2px); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 15px 28px;
+      background: transparent;
+      color: var(--text2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem; font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
 
-    /* === SOCIAL PROOF === */
-    .proof-strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 36px 0; background: var(--bg2); }
-    .proof-text { text-align: center; font-size: 0.82rem; color: var(--text2); margin-bottom: 24px; font-weight: 500; }
-    .proof-logos { display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap; }
-    .proof-logo { width: 100px; height: 36px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--text3); font-weight: 600; letter-spacing: 0.04em; }
+    /* stats strip */
+    .stats-strip {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .stat {
+      background: var(--navy2);
+      padding: 24px 20px;
+      text-align: center;
+    }
+    .stat-num { font-size: 2rem; font-weight: 900; letter-spacing: -0.04em; color: var(--gold); line-height: 1; }
+    .stat-label { font-size: 0.75rem; color: var(--text2); margin-top: 6px; }
 
-    /* === STATS === */
-    .stats-strip { padding: 40px 0; }
-    .stats-inner { display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; gap: 24px; }
-    .stat { text-align: center; }
-    .stat-num { font-size: 2.2rem; font-weight: 900; letter-spacing: -0.04em; }
-    .stat-num em { color: var(--accent); font-style: normal; }
-    .stat-label { font-size: 0.74rem; color: var(--text2); margin-top: 4px; }
-    .stat-div { width: 1px; height: 44px; background: var(--border); }
-
-    /* === SECTIONS === */
-    .sec { padding: 90px 0; }
-    .sec.alt { background: var(--bg2); }
-    .sec-label { display: block; color: var(--accent); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
-    .sec-title { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 14px; }
-    .sec-sub { color: var(--text2); font-size: 0.97rem; line-height: 1.75; max-width: 540px; }
+    /* ── SECTIONS ── */
+    .sec { padding: 96px 0; }
+    .sec-alt { background: var(--navy2); }
+    .sec-label { display: block; color: var(--gold); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+    .sec-title { font-size: clamp(1.9rem, 3.5vw, 2.8rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.12; margin-bottom: 16px; }
+    .sec-title em { font-style: normal; color: var(--gold); }
+    .sec-sub { color: var(--text2); font-size: 0.97rem; line-height: 1.8; max-width: 540px; }
     .sec-head { margin-bottom: 56px; }
     .center { text-align: center; }
     .center .sec-sub { margin: 0 auto; }
+    .divider { width: 48px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); border-radius: 2px; margin: 16px 0; }
+    .center .divider { margin: 16px auto; }
 
-    /* === MODULES === */
-    .modules-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-    .module-card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 32px; transition: all 0.3s; position: relative; overflow: hidden; }
-    .module-card:hover { border-color: var(--border-accent); transform: translateY(-3px); box-shadow: 0 8px 40px rgba(233,30,140,0.08); }
-    .module-card::before { content:''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); opacity: 0; transition: opacity 0.3s; }
-    .module-card:hover::before { opacity: 1; }
-    .mod-icon { width: 50px; height: 50px; background: var(--glow); border: 1px solid var(--border-accent); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 18px; }
-    .module-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
-    .module-card p { font-size: 0.84rem; color: var(--text2); line-height: 1.7; margin-bottom: 14px; }
-    .mod-features { display: flex; flex-direction: column; gap: 6px; }
-    .mod-feat { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: var(--text2); }
-    .mod-feat::before { content:'✓'; color: var(--accent); font-weight: 700; font-size: 0.7rem; }
+    /* ── HİZMETLER ── */
+    .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .service-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .service-card:hover { border-color: var(--gold-border); background: var(--card2); transform: translateY(-4px); }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon {
+      width: 52px; height: 52px;
+      background: var(--gold-glow);
+      border: 1px solid var(--gold-border);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+    .service-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+    .service-card p { font-size: 0.85rem; color: var(--text2); line-height: 1.7; margin-bottom: 16px; }
+    .service-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-size: 0.7rem; font-weight: 600;
+      padding: 4px 10px;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid var(--gold-border);
+      color: var(--gold);
+      border-radius: 100px;
+    }
 
-    /* === STEPS === */
-    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .step-card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 32px; position: relative; transition: all 0.3s; }
-    .step-card:hover { border-color: var(--border-accent); transform: translateY(-3px); }
-    .step-num { font-size: 3.5rem; font-weight: 900; color: rgba(233,30,140,0.1); letter-spacing: -0.04em; line-height: 1; margin-bottom: 16px; }
-    .step-icon { width: 44px; height: 44px; background: var(--glow); border: 1px solid var(--border-accent); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-bottom: 14px; }
-    .step-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-    .step-card p { font-size: 0.84rem; color: var(--text2); line-height: 1.65; }
-    .step-detail { margin-top: 12px; padding: 10px 12px; background: rgba(233,30,140,0.05); border: 1px solid var(--border-accent); border-radius: 8px; font-size: 0.75rem; color: var(--text2); }
+    /* ── SÜREÇ ── */
+    .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .process-step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px 22px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .process-step:hover { border-color: var(--gold-border); transform: translateY(-3px); }
+    .step-num {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; font-weight: 900;
+      margin: 0 auto 16px;
+    }
+    .process-step h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .process-step p { font-size: 0.8rem; color: var(--text2); line-height: 1.65; }
 
-    /* === BEFORE/AFTER === */
-    .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .ba-side { display: flex; flex-direction: column; gap: 10px; }
-    .ba-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 14px; border-radius: 6px; display: inline-block; margin-bottom: 6px; }
-    .ba-title.bad { background: rgba(239,68,68,0.1); color: #ef4444; }
-    .ba-title.good { background: rgba(34,197,94,0.1); color: #22c55e; }
-    .ba-item { display: flex; align-items: flex-start; gap: 10px; padding: 14px; background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); font-size: 0.83rem; color: var(--text2); line-height: 1.55; }
-    .ba-item.good-item { border-color: rgba(34,197,94,0.15); background: rgba(34,197,94,0.03); }
-    .ba-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
-    .ba-dot.red { background: #ef4444; }
-    .ba-dot.green { background: #22c55e; }
+    /* ── ÜRÜN ── */
+    .product-card {
+      background: var(--card);
+      border: 1px solid var(--gold-border);
+      border-radius: 20px;
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-card::before {
+      content: '';
+      position: absolute; top: -100px; right: -100px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(201,168,76,0.08), transparent 70%);
+      pointer-events: none;
+    }
+    .product-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy);
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .product-card h3 { font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 12px; }
+    .product-card h3 span { color: var(--gold); }
+    .product-card p { font-size: 0.92rem; color: var(--text2); line-height: 1.8; margin-bottom: 24px; }
+    .product-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .pf-item { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; }
+    .pf-check { width: 20px; height: 20px; background: var(--gold-glow); border: 1px solid var(--gold-border); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gold); font-size: 0.65rem; font-weight: 700; }
+    .product-visual {
+      background: var(--navy3);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .pv-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .pv-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .pv-title { font-size: 0.8rem; font-weight: 700; }
+    .pv-msg { padding: 10px 14px; border-radius: 10px; font-size: 0.78rem; line-height: 1.5; margin-bottom: 8px; }
+    .pv-msg.in { background: var(--navy2); color: var(--text2); border-bottom-left-radius: 3px; }
+    .pv-msg.out { background: linear-gradient(135deg, var(--gold), var(--gold2)); color: var(--navy); font-weight: 600; border-bottom-right-radius: 3px; margin-left: 20%; }
+    .pv-tag { font-size: 0.65rem; color: var(--text3); margin: 0 4px 8px; }
+    .pv-tag.right { text-align: right; }
 
-    /* === TESTIMONIALS === */
+    /* ── TESTİMONİALLER ── */
     .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .testi-card { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); padding: 28px; display: flex; flex-direction: column; }
-    .testi-stars { color: #f59e0b; font-size: 0.82rem; margin-bottom: 14px; letter-spacing: 2px; }
-    .testi-text { font-size: 0.86rem; color: var(--text2); line-height: 1.75; flex: 1; margin-bottom: 20px; font-style: italic; }
+    .testi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.3s;
+    }
+    .testi-card:hover { border-color: var(--gold-border); }
+    .stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 14px; letter-spacing: 2px; }
+    .testi-text { font-size: 0.88rem; color: var(--text2); line-height: 1.75; margin-bottom: 20px; font-style: italic; }
     .testi-author { display: flex; align-items: center; gap: 12px; }
-    .testi-av { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #fff; flex-shrink: 0; }
-    .testi-name { font-size: 0.84rem; font-weight: 700; }
-    .testi-role { font-size: 0.7rem; color: var(--text2); }
-
-    /* === PRICING === */
-    .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .price-card { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 32px; position: relative; }
-    .price-card.hot { border-color: var(--border-accent); background: rgba(233,30,140,0.04); }
-    .price-badge { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; font-size: 0.68rem; font-weight: 700; padding: 3px 14px; border-radius: 100px; white-space: nowrap; }
-    .price-name { font-size: 0.72rem; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 10px; }
-    .price-amount { font-size: 2.2rem; font-weight: 900; letter-spacing: -0.04em; margin-bottom: 2px; }
-    .price-amount small { font-size: 0.85rem; font-weight: 400; color: var(--text2); }
-    .price-sub { font-size: 0.76rem; color: var(--text2); margin-bottom: 22px; }
-    .price-hr { border: none; border-top: 1px solid var(--border); margin-bottom: 22px; }
-    .price-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
-    .price-list li { display: flex; align-items: center; gap: 8px; font-size: 0.83rem; }
-    .pc { width: 18px; height: 18px; border-radius: 50%; background: var(--glow); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 0.6rem; flex-shrink: 0; }
-    .px { width: 18px; height: 18px; border-radius: 50%; background: rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center; color: var(--text3); font-size: 0.6rem; flex-shrink: 0; }
-    .price-list li.off { color: var(--text3); }
-    .btn-price { display: flex; align-items: center; justify-content: center; width: 100%; padding: 13px; border-radius: 10px; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; font-family: 'Inter', sans-serif; }
-    .btn-price.primary { background: var(--accent); color: #fff; }
-    .btn-price.primary:hover { background: var(--accent-dark); box-shadow: 0 4px 20px rgba(233,30,140,0.4); }
-    .btn-price.outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
-    .btn-price.outline:hover { border-color: var(--border-accent); color: var(--accent); }
-
-    /* === FAQ === */
-    .faq-list { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
-    .faq-item { background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius); overflow: hidden; }
-    .faq-q { display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; cursor: pointer; font-size: 0.9rem; font-weight: 600; gap: 14px; user-select: none; transition: color 0.2s; }
-    .faq-q:hover { color: var(--accent); }
-    .faq-icon { width: 24px; height: 24px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(255,255,255,0.05); color: var(--text2); font-size: 1rem; transition: all 0.3s; }
-    .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--glow); color: var(--accent); }
-    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
-    .faq-a-inner { padding: 0 22px 18px; font-size: 0.86rem; color: var(--text2); line-height: 1.75; }
-    .faq-item.open .faq-a { max-height: 300px; }
-
-    /* === CONTACT === */
-    .contact-sec { padding: 80px 0; }
-    .contact-form { max-width: 560px; margin: 0 auto; display: flex; flex-direction: column; gap: 14px; }
-    .contact-form input, .contact-form textarea, .contact-form select {
-      width: 100%; padding: 14px 18px; background: rgba(255,255,255,0.04); border: 1px solid var(--card-border);
-      border-radius: 10px; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.9rem;
-      outline: none; transition: border-color 0.2s;
+    .testi-av {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 700; color: var(--navy);
+      flex-shrink: 0;
     }
-    .contact-form input:focus, .contact-form textarea:focus, .contact-form select:focus { border-color: var(--accent); }
-    .contact-form textarea { resize: vertical; min-height: 100px; }
-    .contact-form select option { background: #1a1a2e; }
-    .form-success { display: none; text-align: center; padding: 24px; color: #4ade80; font-weight: 600; font-size: 1.05rem; }
+    .testi-name { font-size: 0.88rem; font-weight: 700; }
+    .testi-role { font-size: 0.75rem; color: var(--text2); }
 
-    /* === FINAL CTA === */
-    .final-sec { padding: 80px 0; }
-    .final-box { background: var(--card); border: 1px solid var(--card-border); border-radius: 20px; padding: 72px 48px; text-align: center; position: relative; overflow: hidden; }
-    .final-box::before { content:''; position:absolute; top:50%;left:50%;transform:translate(-50%,-50%); width:600px;height:300px; background:radial-gradient(ellipse,rgba(233,30,140,0.07) 0%,transparent 65%); pointer-events:none; }
-    .final-box h2 { font-size: clamp(1.8rem,3.5vw,2.8rem); font-weight: 900; letter-spacing: -0.03em; margin-bottom: 14px; position: relative; }
-    .final-box p { color: var(--text2); font-size: 0.97rem; max-width: 480px; margin: 0 auto 32px; line-height: 1.75; position: relative; }
-    .final-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; position: relative; }
-    .final-fine { margin-top: 16px; font-size: 0.73rem; color: var(--text3); position: relative; }
-
-    /* === FOOTER === */
-    footer { border-top: 1px solid var(--border); padding: 28px 0; }
-    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-    .footer-inner p { font-size: 0.75rem; color: var(--text2); }
-    .footer-inner a { color: var(--text2); text-decoration: none; }
-    .footer-links { display: flex; gap: 24px; }
-    .footer-links a { font-size: 0.75rem; color: var(--text2); text-decoration: none; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--text); }
-    .footer-social { display: flex; gap: 14px; }
-    .footer-social a { width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-    .footer-social a:hover { border-color: var(--border-accent); background: var(--glow); }
-    .footer-social svg { width: 14px; height: 14px; fill: var(--text2); }
-
-    /* === ANIMATIONS === */
-    .fi { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .fi.v { opacity: 1; transform: translateY(0); }
-
-    /* === RESPONSIVE === */
-    @media (max-width: 1024px) {
-      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-      .hero-visual { display: none; }
-      .modules-grid { grid-template-columns: 1fr 1fr; }
-      .testi-grid { grid-template-columns: 1fr 1fr; }
-      .price-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
+    /* ── HAKKIMIZDA ── */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .about-img {
+      background: var(--navy3);
+      border: 1px solid var(--gold-border);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
     }
+    .about-avatar {
+      width: 100px; height: 100px; border-radius: 20px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem; font-weight: 900; color: var(--navy);
+      margin: 0 auto 20px;
+    }
+    .about-name { font-size: 1.4rem; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 6px; }
+    .about-title { font-size: 0.85rem; color: var(--gold); font-weight: 600; margin-bottom: 20px; }
+    .about-socials { display: flex; justify-content: center; gap: 10px; }
+    .social-btn {
+      padding: 8px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.75rem; color: var(--text2);
+      text-decoration: none;
+      transition: all 0.2s;
+      font-weight: 600;
+    }
+    .social-btn:hover { border-color: var(--gold-border); color: var(--gold); }
+    .about-content h2 { font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 16px; }
+    .about-content h2 em { font-style: normal; color: var(--gold); }
+    .about-content p { font-size: 0.92rem; color: var(--text2); line-height: 1.85; margin-bottom: 16px; }
+    .about-skills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .skill { padding: 6px 14px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; font-size: 0.78rem; color: var(--text2); font-weight: 500; }
+
+    /* ── İLETİŞİM ── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .contact-info h3 { font-size: 1.4rem; font-weight: 800; margin-bottom: 12px; }
+    .contact-info p { font-size: 0.9rem; color: var(--text2); line-height: 1.8; margin-bottom: 28px; }
+    .contact-items { display: flex; flex-direction: column; gap: 14px; }
+    .contact-item { display: flex; align-items: center; gap: 14px; }
+    .ci-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--gold-glow); border: 1px solid var(--gold-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .ci-label { font-size: 0.72rem; color: var(--text2); margin-bottom: 2px; }
+    .ci-value { font-size: 0.9rem; font-weight: 600; }
+    .contact-form { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text2); margin-bottom: 8px; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      background: var(--navy3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--gold-border); }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-group select option { background: var(--navy2); }
+    .btn-form {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      color: var(--navy);
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem; font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-form:hover { opacity: 0.9; box-shadow: 0 6px 24px rgba(201,168,76,0.35); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy2);
+      border-top: 1px solid var(--border);
+      padding: 48px 0 32px;
+    }
+    .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
+    .footer-brand p { font-size: 0.85rem; color: var(--text2); line-height: 1.75; margin-top: 12px; max-width: 280px; }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 16px; color: var(--gold); }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a { font-size: 0.82rem; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--text); }
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; }
+    .footer-bottom p { font-size: 0.78rem; color: var(--text3); }
+
+    /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
-      .nav-links a:not(.btn-nav) { display: none; }
-      .hamburger { display: flex; }
-      .modules-grid { grid-template-columns: 1fr; }
-      .steps-grid { grid-template-columns: 1fr; }
-      .ba-grid { grid-template-columns: 1fr; }
-      .testi-grid { grid-template-columns: 1fr; }
-      .final-box { padding: 48px 24px; }
-      .proof-logos { gap: 20px; }
+      .nav-links { display: none; }
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+      .services-grid, .testi-grid, .about-grid, .contact-grid, .footer-inner { grid-template-columns: 1fr; }
+      .process-grid { grid-template-columns: repeat(2, 1fr); }
+      .product-card { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="nav">
-  <div class="container nav-inner">
-    <a href="#" class="logo">hal<em>flow</em> <span style="font-size:0.65rem;color:var(--text3);font-weight:400;margin-left:4px">for schools</span></a>
-    <div class="nav-links">
-      <a href="#moduller">Moduller</a>
-      <a href="#nasil">Nasil Calisir</a>
-      <a href="#fiyat">Fiyatlar</a>
-      <a href="#sss">SSS</a>
-      <a href="#demo" class="btn-nav">Demo Iste &#8594;</a>
+  <!-- NAV -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">H</div>
+        <div class="logo-text">Halit <span>Automation</span></div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#hizmetler">Hizmetler</a></li>
+        <li><a href="#surec">Süreç</a></li>
+        <li><a href="#urun">Ürün</a></li>
+        <li><a href="#hakkimizda">Hakkımızda</a></li>
+        <li><a href="#iletisim">İletişim</a></li>
+      </ul>
+      <a href="#iletisim" class="btn-nav">Ücretsiz Danışma</a>
     </div>
-    <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
+  </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-glow"></div>
-  <div class="container">
-    <div class="hero-inner">
-      <div class="fi">
-        <div class="hero-tag">Yapay Zeka &#183; n8n &#183; WhatsApp</div>
-        <h1>Okulunuzu<br /><span>Yapay Zeka</span> ile<br />Yonetin</h1>
-        <p class="hero-sub">Ogretmen, ogrenci, veli ve yonetici — herkes icin tek platform. Ders plani, randevu, not takibi, performans analizi. Hepsi otomatik.</p>
-        <div class="cta-row">
-          <a href="#demo" class="btn-main">Ucretsiz Demo Iste &#8594;</a>
-          <a href="#nasil" class="btn-ghost">Nasil calisir?</a>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-badge">AI & Otomasyon Ajansı — Türkiye</div>
+        <h1>İşletmenizi <em>Yapay Zeka</em> ile Büyütün</h1>
+        <p class="hero-sub">Tekrarlayan işleri otomatize eder, satışlarınızı artırır, müşterilerinize 7/24 hizmet veririz. n8n, WhatsApp, AI entegrasyon ve daha fazlası.</p>
+        <div class="hero-btns">
+          <a href="#iletisim" class="btn-primary">Ücretsiz Danışma Al →</a>
+          <a href="#hizmetler" class="btn-secondary">Hizmetleri Gör</a>
         </div>
-        <span class="hero-fine">30 gun ucretsiz &#183; Kurulum 3 gun &#183; Teknik bilgi gerekmez</span>
-      </div>
-      <div class="hero-visual fi">
-        <div class="hero-mockup">
-          <div class="mockup-bar short"></div>
-          <div class="mockup-bar med"></div>
-          <div class="mockup-row">
-            <div class="mockup-card">
-              <div class="mc-icon">&#128218;</div>
-              <div class="mc-title">Ders Planlari</div>
-              <div class="mc-val">142</div>
-              <div class="mc-bar"><div class="mc-bar-fill" style="width:78%"></div></div>
-            </div>
-            <div class="mockup-card">
-              <div class="mc-icon">&#127891;</div>
-              <div class="mc-title">Ogrenciler</div>
-              <div class="mc-val">1.240</div>
-              <div class="mc-bar"><div class="mc-bar-fill" style="width:92%"></div></div>
-            </div>
+        <div class="stats-strip">
+          <div class="stat">
+            <div class="stat-num">50+</div>
+            <div class="stat-label">Tamamlanan Proje</div>
           </div>
-          <div class="mockup-row">
-            <div class="mockup-card">
-              <div class="mc-icon">&#128200;</div>
-              <div class="mc-title">Basari Orani</div>
-              <div class="mc-val">%87</div>
-              <div class="mc-bar"><div class="mc-bar-fill" style="width:87%"></div></div>
-            </div>
-            <div class="mockup-card">
-              <div class="mc-icon">&#128172;</div>
-              <div class="mc-title">Mesajlar</div>
-              <div class="mc-val">3.8K</div>
-              <div class="mc-bar"><div class="mc-bar-fill" style="width:64%"></div></div>
-            </div>
+          <div class="stat">
+            <div class="stat-num">%90</div>
+            <div class="stat-label">Zaman Tasarrufu</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">7/24</div>
+            <div class="stat-label">AI Destekli Hizmet</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">100+</div>
+            <div class="stat-label">API Entegrasyonu</div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- SOCIAL PROOF -->
-<div class="proof-strip">
-  <div class="container">
-    <p class="proof-text">Turkiye genelinde 30+ egitim kurumunun tercihi</p>
-    <div class="proof-logos">
-      <div class="proof-logo">Koleji A</div>
-      <div class="proof-logo">Okul B</div>
-      <div class="proof-logo">Kurs C</div>
-      <div class="proof-logo">Akademi D</div>
-      <div class="proof-logo">Koleji E</div>
-    </div>
-  </div>
-</div>
-
-<!-- STATS -->
-<div class="stats-strip">
-  <div class="container">
-    <div class="stats-inner">
-      <div class="stat"><div class="stat-num">30<em>+</em></div><div class="stat-label">Aktif Okul</div></div>
-      <div class="stat-div"></div>
-      <div class="stat"><div class="stat-num">%<em>85</em></div><div class="stat-label">Is Yuku Azalmasi</div></div>
-      <div class="stat-div"></div>
-      <div class="stat"><div class="stat-num">4<em> modul</em></div><div class="stat-label">Tek Platformda</div></div>
-      <div class="stat-div"></div>
-      <div class="stat"><div class="stat-num">7<em>/24</em></div><div class="stat-label">AI Asistan</div></div>
-      <div class="stat-div"></div>
-      <div class="stat"><div class="stat-num">3<em> gun</em></div><div class="stat-label">Kurulum Suresi</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- ONCE / SONRA -->
-<section class="sec">
-  <div class="container">
-    <div class="sec-head center fi">
-      <span class="sec-label">Fark</span>
-      <h2 class="sec-title">Okul yonetimi neden bu kadar zor?</h2>
-      <p class="sec-sub">Ogretmenler evrak isinde, veliler bilgiye ulasamiyor, yoneticiler veriyi takip edemiyor. Cozum yapay zeka.</p>
-    </div>
-    <div class="ba-grid">
-      <div class="ba-side fi">
-        <span class="ba-title bad">&#9888;&#65039; Geleneksel Yontem</span>
-        <div class="ba-item"><div class="ba-dot red"></div>Ogretmenler saatlerce ders plani ve materyal hazirliyor</div>
-        <div class="ba-item"><div class="ba-dot red"></div>Veliler cocuklarinin durumunu ogrenemiyor, surekli telefon aciyor</div>
-        <div class="ba-item"><div class="ba-dot red"></div>Not ve devamsizlik takibi Excel'de, hataya acik</div>
-        <div class="ba-item"><div class="ba-dot red"></div>Ogrenciler ders disinda destek alamiyor</div>
-        <div class="ba-item"><div class="ba-dot red"></div>Yoneticiler performans verisini manuel topluyor</div>
+  <!-- HİZMETLER -->
+  <section class="sec sec-alt" id="hizmetler">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-label">Hizmetlerimiz</span>
+        <h2 class="sec-title">İşletmeniz için <em>Özel Çözümler</em></h2>
+        <div class="divider"></div>
+        <p class="sec-sub">Her işletmenin ihtiyacı farklıdır. Size özel otomasyon çözümleri tasarlayıp hayata geçiriyoruz.</p>
       </div>
-      <div class="ba-side fi">
-        <span class="ba-title good">&#10004; Halflow ile</span>
-        <div class="ba-item good-item"><div class="ba-dot green"></div>AI, MEB mufredatina uygun ders planini saniyede olusturuyor</div>
-        <div class="ba-item good-item"><div class="ba-dot green"></div>Veliler WhatsApp'tan aninda not, devamsizlik, randevu sorgulayabiliyor</div>
-        <div class="ba-item good-item"><div class="ba-dot green"></div>Tum veriler otomatik Google Sheets'te, hata payi sifir</div>
-        <div class="ba-item good-item"><div class="ba-dot green"></div>Ogrenciler 7/24 odev, test ve video destegi aliyor</div>
-        <div class="ba-item good-item"><div class="ba-dot green"></div>Yonetim paneli tek tikla performans raporu ve risk analizi sunuyor</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- MODULLER -->
-<section id="moduller" class="sec alt">
-  <div class="container">
-    <div class="sec-head center fi">
-      <span class="sec-label">4 Modul</span>
-      <h2 class="sec-title">Her rol icin ozel AI asistan</h2>
-      <p class="sec-sub">Ogretmenden yoneticiye, herkesin isini kolaylastiran akilli moduller.</p>
-    </div>
-    <div class="modules-grid">
-      <div class="module-card fi">
-        <div class="mod-icon">&#128218;</div>
-        <h3>Ogretmen Asistani</h3>
-        <p>Ders planlamayi, materyal hazirlamayi ve veli iletisimini yapay zekaya birakin. MEB mufredatina tam uyumlu.</p>
-        <div class="mod-features">
-          <div class="mod-feat">MEB kazanimlarina uygun ders plani</div>
-          <div class="mod-feat">Akilli materyal ve video onerisi</div>
-          <div class="mod-feat">Profesyonel veli mesaji hazirlama</div>
-          <div class="mod-feat">Sinav sorusu ve rubrik olusturma</div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">⚙️</div>
+          <h3>Workflow Otomasyonu</h3>
+          <p>n8n ile iş süreçlerinizi otomatize edin. Fatura, sipariş, bildirim, raporlama — hepsi otomatik.</p>
+          <div class="service-tags">
+            <span class="tag">n8n</span>
+            <span class="tag">Make</span>
+            <span class="tag">Zapier</span>
+            <span class="tag">API</span>
+          </div>
         </div>
-      </div>
-      <div class="module-card fi">
-        <div class="mod-icon">&#127891;</div>
-        <h3>Ogrenci Platformu</h3>
-        <p>Ogrenciler WhatsApp veya Telegram uzerinden 7/24 odev, test ve egitim videosuna ulasir.</p>
-        <div class="mod-features">
-          <div class="mod-feat">Seviyeye uygun odev ve test uretimi</div>
-          <div class="mod-feat">YouTube'dan konu bazli video onerisi</div>
-          <div class="mod-feat">Interaktif soru-cevap destegi</div>
-          <div class="mod-feat">Calisma plani olusturma</div>
+        <div class="service-card">
+          <div class="service-icon">💬</div>
+          <h3>WhatsApp & Chatbot</h3>
+          <p>Müşteri mesajlarına 7/24 otomatik yanıt. Randevu alma, sipariş takibi, müşteri desteği tamamen otomatik.</p>
+          <div class="service-tags">
+            <span class="tag">WhatsApp</span>
+            <span class="tag">Telegram</span>
+            <span class="tag">AI Bot</span>
+          </div>
         </div>
-      </div>
-      <div class="module-card fi">
-        <div class="mod-icon">&#128106;</div>
-        <h3>Veli Portali</h3>
-        <p>Veliler WhatsApp'tan tek mesajla cocuklarinin not, devamsizlik ve ders durumunu ogrenebilir.</p>
-        <div class="mod-features">
-          <div class="mod-feat">Anlik not ve devamsizlik sorgulama</div>
-          <div class="mod-feat">Ogretmenle gorusme randevusu</div>
-          <div class="mod-feat">Otomatik bilgilendirme mesajlari</div>
-          <div class="mod-feat">Haftalik gelisim raporu</div>
+        <div class="service-card">
+          <div class="service-icon">🤖</div>
+          <h3>AI Entegrasyonu</h3>
+          <p>ChatGPT, Claude, Gemini gibi yapay zeka modellerini iş süreçlerinize entegre edin. İçerik üretimi, analiz, kararlar.</p>
+          <div class="service-tags">
+            <span class="tag">Claude</span>
+            <span class="tag">GPT-4o</span>
+            <span class="tag">Gemini</span>
+          </div>
         </div>
-      </div>
-      <div class="module-card fi">
-        <div class="mod-icon">&#128200;</div>
-        <h3>Yonetim Paneli</h3>
-        <p>Okul muduru ve yoneticiler icin performans analizi, risk tespiti ve karar destek sistemi.</p>
-        <div class="mod-features">
-          <div class="mod-feat">Ogretmen performans raporu</div>
-          <div class="mod-feat">Risk altindaki ogrenci tespiti</div>
-          <div class="mod-feat">Devamsizlik ve basari analitigi</div>
-          <div class="mod-feat">Donem sonu karsilastirmali rapor</div>
+        <div class="service-card">
+          <div class="service-icon">📈</div>
+          <h3>Satış & CRM Otomasyonu</h3>
+          <p>Lead toplama, müşteri takibi, teklif gönderme, satış pipeline yönetimi. Satış ekibiniz daha az işle daha çok satar.</p>
+          <div class="service-tags">
+            <span class="tag">CRM</span>
+            <span class="tag">Email</span>
+            <span class="tag">Lead Gen</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- NASIL CALISIR -->
-<section id="nasil" class="sec">
-  <div class="container">
-    <div class="sec-head center fi">
-      <span class="sec-label">Surec</span>
-      <h2 class="sec-title">3 adimda okulunuz dijitallesiyor</h2>
-      <p class="sec-sub">Teknik bilgi gerekmez. Biz kurariz, siz kullanirsiniz.</p>
-    </div>
-    <div class="steps-grid">
-      <div class="step-card fi">
-        <div class="step-num">01</div>
-        <div class="step-icon">&#128221;</div>
-        <h3>Okul Bilgilerini Alin</h3>
-        <p>Ogretmen listesi, sinif yapisi, ders programi ve mufredati sisteme giriyoruz. Sizden sadece mevcut veriler yeterli.</p>
-        <div class="step-detail">Google Sheets sablonlarini biz hazirliyoruz, siz sadece doldurun.</div>
+  <!-- SÜREÇ -->
+  <section class="sec" id="surec">
+    <div class="container">
+      <div class="sec-head center">
+        <span class="sec-label">Nasıl Çalışır</span>
+        <h2 class="sec-title">4 Adımda <em>Otomasyon</em></h2>
+        <div class="divider"></div>
+        <p class="sec-sub">Karmaşık süreçleri basit 4 adıma indirgedik. İlk sonuçları 1 haftada görürsünüz.</p>
       </div>
-      <div class="step-card fi">
-        <div class="step-num">02</div>
-        <div class="step-icon">&#9881;&#65039;</div>
-        <h3>Sistemi Kuruyoruz</h3>
-        <p>n8n workflow'lari, AI modulleri ve WhatsApp/Telegram entegrasyonlarini yapiyoruz. 3 gun icerisinde hazir.</p>
-        <div class="step-detail">Okulunuza ozel yapilandirma — sinif sayisina, mufredatiniza ve ihtiyaclariniza gore.</div>
-      </div>
-      <div class="step-card fi">
-        <div class="step-num">03</div>
-        <div class="step-icon">&#9889;</div>
-        <h3>Hazir, Kullanin</h3>
-        <p>Ogretmenler, veliler ve ogrenciler WhatsApp uzerinden sistemi kullanmaya basliyor. Yonetim paneli aninda aktif.</p>
-        <div class="step-detail">Egitim videosu ve canli destek ile baslangic surecinde yaninizda oluyoruz.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="sec alt">
-  <div class="container">
-    <div class="sec-head center fi">
-      <span class="sec-label">Referanslar</span>
-      <h2 class="sec-title">Egitimciler ne diyor?</h2>
-    </div>
-    <div class="testi-grid">
-      <div class="testi-card fi">
-        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="testi-text">"Ders plani hazirlamak icin saatlerimi harciyordum. Simdi AI 2 dakikada MEB'e uygun plan olusturuyor. Hayatimi degistirdi."</p>
-        <div class="testi-author">
-          <div class="testi-av" style="background:linear-gradient(135deg,#e91e8c,#9c27b0)">SK</div>
-          <div><div class="testi-name">Selin Korkmaz</div><div class="testi-role">Matematik Ogretmeni, Istanbul</div></div>
+      <div class="process-grid">
+        <div class="process-step">
+          <div class="step-num">1</div>
+          <h3>Keşif & Analiz</h3>
+          <p>İş süreçlerinizi, sorunlarınızı ve hedeflerinizi birlikte analiz ediyoruz.</p>
         </div>
-      </div>
-      <div class="testi-card fi">
-        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="testi-text">"Veliler artik WhatsApp'tan cocuklarinin notlarini aninda goruyorlar. Telefon trafigimiz %70 azaldi, veli memnuniyeti tavanda."</p>
-        <div class="testi-author">
-          <div class="testi-av" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">HY</div>
-          <div><div class="testi-name">Hasan Yildirim</div><div class="testi-role">Okul Muduru, Ankara</div></div>
+        <div class="process-step">
+          <div class="step-num">2</div>
+          <h3>Çözüm Tasarımı</h3>
+          <p>Size özel otomasyon mimarisi tasarlıyoruz. Hangi araçlar, nasıl entegre olacak.</p>
         </div>
-      </div>
-      <div class="testi-card fi">
-        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="testi-text">"Ogretmen performans raporlari ve risk altindaki ogrenci tespiti, karar vermemi inanilmaz kolaylastirdi. Veri odakli yonetim yapabiliyorum."</p>
-        <div class="testi-author">
-          <div class="testi-av" style="background:linear-gradient(135deg,#22c55e,#06b6d4)">NA</div>
-          <div><div class="testi-name">Nurgul Aksoy</div><div class="testi-role">Egitim Koordinatoru, Izmir</div></div>
+        <div class="process-step">
+          <div class="step-num">3</div>
+          <h3>Geliştirme & Test</h3>
+          <p>Sistemi kuruyoruz, test ediyoruz, hataları düzeltiyoruz. Canlıya hazır hale getiriyoruz.</p>
+        </div>
+        <div class="process-step">
+          <div class="step-num">4</div>
+          <h3>Destek & Optimizasyon</h3>
+          <p>Canlıya geçtikten sonra da yanınızdayız. Sürekli izleme ve iyileştirme.</p>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- FIYATLANDIRMA -->
-<section id="fiyat" class="sec">
-  <div class="container">
-    <div class="sec-head center fi">
-      <span class="sec-label">Fiyatlandirma</span>
-      <h2 class="sec-title">Seffaf, sabit fiyatlar</h2>
-      <p class="sec-sub">Ogrenci sayisina gore olceklenir. Gizli ucret yok.</p>
-    </div>
-    <div class="price-grid">
-      <div class="price-card fi">
-        <div class="price-name">Baslangic</div>
-        <div class="price-amount">4.900 <small>TL/ay</small></div>
-        <div class="price-sub">500'e kadar ogrenci + 15.000 TL kurulum</div>
-        <hr class="price-hr" />
-        <ul class="price-list">
-          <li><div class="pc">&#10003;</div> Ogretmen Asistani</li>
-          <li><div class="pc">&#10003;</div> Ogrenci Platformu</li>
-          <li><div class="pc">&#10003;</div> WhatsApp entegrasyonu</li>
-          <li><div class="pc">&#10003;</div> Google Sheets veri tabani</li>
-          <li class="off"><div class="px">&#10007;</div> Veli Portali</li>
-          <li class="off"><div class="px">&#10007;</div> Yonetim Paneli</li>
-        </ul>
-        <a href="#demo" class="btn-price outline">Basla</a>
+  <!-- ÜRÜN: HALFLOW -->
+  <section class="sec sec-alt" id="urun">
+    <div class="container">
+      <div class="sec-head">
+        <span class="sec-label">Kendi Ürünümüz</span>
+        <h2 class="sec-title">Tanışın: <em>Halflow</em></h2>
+        <div class="divider"></div>
+        <p class="sec-sub">Küçük işletmeler için geliştirdiğimiz hazır AI dijital sekreter çözümü.</p>
       </div>
-      <div class="price-card hot fi">
-        <div class="price-badge">&#11088; En Populer</div>
-        <div class="price-name">Profesyonel</div>
-        <div class="price-amount">9.900 <small>TL/ay</small></div>
-        <div class="price-sub">1.500'e kadar ogrenci + 25.000 TL kurulum</div>
-        <hr class="price-hr" />
-        <ul class="price-list">
-          <li><div class="pc">&#10003;</div> Tum 4 modul</li>
-          <li><div class="pc">&#10003;</div> WhatsApp + Telegram</li>
-          <li><div class="pc">&#10003;</div> Veli Portali</li>
-          <li><div class="pc">&#10003;</div> Yonetim Paneli</li>
-          <li><div class="pc">&#10003;</div> Performans analitigi</li>
-          <li><div class="pc">&#10003;</div> Oncelikli destek</li>
-        </ul>
-        <a href="#demo" class="btn-price primary">Hemen Basla</a>
-      </div>
-      <div class="price-card fi">
-        <div class="price-name">Kurumsal</div>
-        <div class="price-amount">19.900 <small>TL/ay</small></div>
-        <div class="price-sub">Sinirsiz ogrenci + Ozel kurulum</div>
-        <hr class="price-hr" />
-        <ul class="price-list">
-          <li><div class="pc">&#10003;</div> Tum 4 modul</li>
-          <li><div class="pc">&#10003;</div> Coklu sube destegi</li>
-          <li><div class="pc">&#10003;</div> Ozel AI yapilandirmasi</li>
-          <li><div class="pc">&#10003;</div> API entegrasyonu</li>
-          <li><div class="pc">&#10003;</div> MEB mufredat senkronizasyonu</li>
-          <li><div class="pc">&#10003;</div> 7/24 oncelikli destek</li>
-        </ul>
-        <a href="#demo" class="btn-price outline">Teklif Iste</a>
+      <div class="product-card">
+        <div class="product-content">
+          <span class="product-badge">Hazır Ürün</span>
+          <h3><span>Halflow</span> — 7/24 Dijital Sekreter</h3>
+          <p>WhatsApp mesajlarınıza AI ile anında yanıt verin. Randevu alın, sık sorulan soruları otomatik cevaplayın, kritik mesajlar için anında uyarı alın.</p>
+          <div class="product-features">
+            <div class="pf-item"><span class="pf-check">✓</span> 7/24 otomatik WhatsApp yanıtı</div>
+            <div class="pf-item"><span class="pf-check">✓</span> AI ile mesaj sınıflandırma</div>
+            <div class="pf-item"><span class="pf-check">✓</span> Randevu yönetimi</div>
+            <div class="pf-item"><span class="pf-check">✓</span> Kritik mesaj anında uyarı</div>
+            <div class="pf-item"><span class="pf-check">✓</span> 1 günde kurulum</div>
+          </div>
+          <a href="https://halflow.info" target="_blank" class="btn-primary" style="display:inline-flex;">Halflow'u İncele →</a>
+        </div>
+        <div class="product-visual">
+          <div class="pv-header">
+            <div class="pv-dot" style="background:#22c55e"></div>
+            <span class="pv-title">Halflow Asistan — Çevrimiçi</span>
+          </div>
+          <div class="pv-msg in">Merhaba, yarın saat 14:00 için randevu alabilir miyim?</div>
+          <div class="pv-tag">Müşteri • 14:23</div>
+          <div class="pv-msg out">Merhaba! 14:00 müsait. Randevunuzu oluşturdum, onay SMS'i gönderildi. ✅</div>
+          <div class="pv-tag right">Halflow • 14:23 • Otomatik</div>
+          <div class="pv-msg in">Teşekkürler, çok hızlı!</div>
+          <div class="pv-tag">Müşteri • 14:24</div>
+          <div class="pv-msg out">Rica ederiz! Randevunuzu iptal veya değiştirmek isterseniz buradayım 😊</div>
+          <div class="pv-tag right">Halflow • 14:24 • Otomatik</div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- SSS -->
-<section id="sss" class="sec alt">
-  <div class="container">
-    <div class="sec-head center fi">
-      <span class="sec-label">SSS</span>
-      <h2 class="sec-title">Sikca sorulan sorular</h2>
-    </div>
-    <div class="faq-list">
-      <div class="faq-item fi">
-        <div class="faq-q">Teknik altyapiya ihtiyacimiz var mi?<div class="faq-icon">+</div></div>
-        <div class="faq-a"><div class="faq-a-inner">Hayir. Sistem tamamen bulut tabanli calisir. Google Workspace hesabi ve WhatsApp Business yeterli. Kurulumu biz yapiyoruz.</div></div>
+  <!-- TESTİMONİALLER -->
+  <section class="sec" id="gorusler">
+    <div class="container">
+      <div class="sec-head center">
+        <span class="sec-label">Müşteri Görüşleri</span>
+        <h2 class="sec-title">Müşterilerimiz <em>Ne Diyor?</em></h2>
+        <div class="divider"></div>
       </div>
-      <div class="faq-item fi">
-        <div class="faq-q">MEB mufredatina uyumlu mu?<div class="faq-icon">+</div></div>
-        <div class="faq-a"><div class="faq-a-inner">Evet. AI, MEB kazanimlarina gore ders plani, odev ve test uretir. Mufredat guncellendikce sistem de guncellenir.</div></div>
-      </div>
-      <div class="faq-item fi">
-        <div class="faq-q">Ogrenci verileri guvenli mi?<div class="faq-icon">+</div></div>
-        <div class="faq-a"><div class="faq-a-inner">Tum veriler Google Workspace altyapisinda sifrelenerek saklanir. KVKK uyumlu calisiyoruz. Veriler ucuncu taraflarla paylasilmaz.</div></div>
-      </div>
-      <div class="faq-item fi">
-        <div class="faq-q">Kac gunde kurulur?<div class="faq-icon">+</div></div>
-        <div class="faq-a"><div class="faq-a-inner">Ortalama 3 is gunu icerisinde sistem aktif olur. Okul buyuklugune gore bu sure 5 gune kadar uzayabilir.</div></div>
-      </div>
-      <div class="faq-item fi">
-        <div class="faq-q">AI yanlis bilgi verirse ne olur?<div class="faq-icon">+</div></div>
-        <div class="faq-a"><div class="faq-a-inner">AI emin olmadigi konularda otomatik olarak ilgili ogretmeni veya yoneticiye yonlendirir. Tum cevaplar mufredat ve okul verileriyle sinirlidir.</div></div>
-      </div>
-      <div class="faq-item fi">
-        <div class="faq-q">Istedigimiz zaman iptal edebilir miyiz?<div class="faq-icon">+</div></div>
-        <div class="faq-a"><div class="faq-a-inner">Evet. Aylik abonelik sistemi ile calisiyoruz. Ceza veya ek ucret olmadan istediginiz zaman iptal edebilirsiniz. Verileriniz size teslim edilir.</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- DEMO FORM -->
-<section id="demo" class="contact-sec" style="background:var(--bg2);">
-  <div class="container">
-    <div class="sec-head center fi">
-      <span class="sec-label">Demo</span>
-      <h2 class="sec-title">Okulunuz icin ucretsiz demo</h2>
-      <p class="sec-sub">Formu doldurun, 24 saat icinde size ozel bir demo hazirlayalim.</p>
-    </div>
-    <div class="contact-form fi" style="text-align:center;">
-      <a href="https://docs.google.com/forms/d/1Wnwi9P5c2aE0ML6A3DXqIdMENf8zFcvYtEhXHofMIoQ/viewform" target="_blank" rel="noopener" class="btn-main" style="display:inline-flex;font-size:1.05rem;padding:18px 36px;">&#128203; Demo Formunu Doldur &#8594;</a>
-      <p style="margin-top:14px;font-size:0.8rem;color:var(--text2);">24 saat icinde donuyoruz.</p>
-    </div>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<section class="final-sec">
-  <div class="container">
-    <div class="final-box fi">
-      <h2>Okulunuzu gelecege hazirlayin</h2>
-      <p>30 gun ucretsiz deneyin. Begenmezseniz ucret odemezsiniz. Kurulum 3 gun.</p>
-      <div class="final-actions">
-        <a href="#demo" class="btn-main">&#128233; Demo Iste</a>
-        <a href="https://wa.me/905551934807" class="btn-ghost" target="_blank" rel="noopener">&#128172; WhatsApp'tan Yaz</a>
-      </div>
-      <p class="final-fine">info@halitautomation.com</p>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="container">
-    <div class="footer-inner">
-      <p>&copy; 2026 Halflow &mdash; <a href="https://halitautomation.com">halitautomation.com</a></p>
-      <div class="footer-links">
-        <a href="#moduller">Moduller</a>
-        <a href="#fiyat">Fiyatlar</a>
-        <a href="#demo">Demo</a>
-        <a href="mailto:info@halitautomation.com">Iletisim</a>
-      </div>
-      <div class="footer-social">
-        <a href="https://wa.me/905551934807" target="_blank" rel="noopener" aria-label="WhatsApp">
-          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        </a>
-        <a href="mailto:info@halitautomation.com" aria-label="Email">
-          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-        </a>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p class="testi-text">"WhatsApp botunu kurduktan sonra hafta sonu mesajlarının %100'üne anında yanıt veriliyor. Artık Pazartesi sabahı 20 cevapsız mesajla başlamıyorum."</p>
+          <div class="testi-author">
+            <div class="testi-av">A</div>
+            <div>
+              <div class="testi-name">Ayşe Kaya</div>
+              <div class="testi-role">Güzellik Salonu Sahibi, Antalya</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p class="testi-text">"Randevu sistemimiz, fatura otomasyonu ve müşteri takibi artık tamamen otomatik. Ekibim asıl işe odaklanıyor. Harika bir yatırım."</p>
+          <div class="testi-author">
+            <div class="testi-av">M</div>
+            <div>
+              <div class="testi-name">Mehmet Arslan</div>
+              <div class="testi-role">Klinik Müdürü, İstanbul</div>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p class="testi-text">"Lead toplama sistemini kurduk, şimdi her gün 20-30 yeni potansiyel müşteri geliyor. Satışlarımız 3 ayda %60 arttı."</p>
+          <div class="testi-author">
+            <div class="testi-av">S</div>
+            <div>
+              <div class="testi-name">Selin Demir</div>
+              <div class="testi-role">E-ticaret Girişimcisi, İzmir</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</footer>
+  </section>
 
-<script>
-// NAV SCROLL
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('scrolled', scrollY > 40);
-});
+  <!-- HAKKIMIZDA -->
+  <section class="sec sec-alt" id="hakkimizda">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img">
+          <div class="about-avatar">H</div>
+          <div class="about-name">Halit Cerben</div>
+          <div class="about-title">Kurucu & AI Otomasyon Uzmanı</div>
+          <div class="about-socials">
+            <a href="mailto:info@halitautomation.com" class="social-btn">✉ Email</a>
+            <a href="https://linkedin.com" target="_blank" class="social-btn">in LinkedIn</a>
+          </div>
+        </div>
+        <div class="about-content">
+          <h2>Teknoloji + <em>İnsan Deneyimi</em></h2>
+          <div class="divider"></div>
+          <p>Öğretmenlik, otelcilik ve işletmecilik geçmişimle müşterilerinizin ne istediğini gerçekten anlıyorum. Bu deneyimi AI ve otomasyon teknolojisiyle birleştirerek işletmelerin büyümesine yardımcı oluyorum.</p>
+          <p>Karmaşık teknik sistemleri, iş sahiplerinin anlayacağı ve hemen kullanabileceği çözümlere dönüştürüyorum. Sadece kurulum değil, sonuç odaklı çalışıyorum.</p>
+          <div class="about-skills">
+            <span class="skill">n8n Advanced</span>
+            <span class="skill">Claude API</span>
+            <span class="skill">OpenAI GPT-4o</span>
+            <span class="skill">WhatsApp API</span>
+            <span class="skill">Supabase</span>
+            <span class="skill">Google Workspace</span>
+            <span class="skill">Instantly.ai</span>
+            <span class="skill">100+ API</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-// FAQ ACCORDION
-document.querySelectorAll('.faq-item').forEach(item => {
-  item.querySelector('.faq-q').addEventListener('click', () => {
-    const open = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-    if (!open) item.classList.add('open');
-  });
-});
+  <!-- İLETİŞİM -->
+  <section class="sec" id="iletisim">
+    <div class="container">
+      <div class="sec-head center">
+        <span class="sec-label">İletişim</span>
+        <h2 class="sec-title">Projenizi <em>Konuşalım</em></h2>
+        <div class="divider"></div>
+        <p class="sec-sub">Ücretsiz danışma görüşmesi için formu doldurun. 24 saat içinde dönüş yapıyorum.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Hızlı İletişim</h3>
+          <p>Projenizi anlatın, size en uygun çözümü birlikte bulalım. İlk görüşme tamamen ücretsiz.</p>
+          <div class="contact-items">
+            <div class="contact-item">
+              <div class="ci-icon">✉</div>
+              <div>
+                <div class="ci-label">E-posta</div>
+                <div class="ci-value">info@halitautomation.com</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="ci-icon">💬</div>
+              <div>
+                <div class="ci-label">WhatsApp</div>
+                <div class="ci-value">+90 555 193 48 07</div>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="ci-icon">📍</div>
+              <div>
+                <div class="ci-label">Konum</div>
+                <div class="ci-value">Antalya, Türkiye (Uzaktan Hizmet)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form">
+          <form onsubmit="handleForm(event)">
+            <div class="form-group">
+              <label>Adınız</label>
+              <input type="text" placeholder="Ad Soyad" required />
+            </div>
+            <div class="form-group">
+              <label>E-posta</label>
+              <input type="email" placeholder="ornek@sirket.com" required />
+            </div>
+            <div class="form-group">
+              <label>İlgilendiğiniz Hizmet</label>
+              <select>
+                <option>Workflow Otomasyonu</option>
+                <option>WhatsApp / Chatbot</option>
+                <option>AI Entegrasyonu</option>
+                <option>Satış & CRM Otomasyonu</option>
+                <option>Halflow — Dijital Sekreter</option>
+                <option>Diğer</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Mesajınız</label>
+              <textarea placeholder="Projenizi kısaca anlatın..."></textarea>
+            </div>
+            <button type="submit" class="btn-form">Ücretsiz Danışma İste →</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
 
-// FADE IN ANIMATION
-var observer = new IntersectionObserver(function(entries) {
-  entries.forEach(function(entry, i) {
-    if (entry.isIntersecting) {
-      setTimeout(function() { entry.target.classList.add('v'); }, i * 80);
-      observer.unobserve(entry.target);
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            <div class="logo-icon">H</div>
+            <div class="logo-text">Halit <span>Automation</span></div>
+          </a>
+          <p>İşletmeniz için yapay zeka destekli otomasyon çözümleri. Türkiye genelinde uzaktan hizmet.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Hizmetler</h4>
+          <ul>
+            <li><a href="#hizmetler">Workflow Otomasyonu</a></li>
+            <li><a href="#hizmetler">WhatsApp Bot</a></li>
+            <li><a href="#hizmetler">AI Entegrasyon</a></li>
+            <li><a href="#hizmetler">Satış Otomasyonu</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Bağlantılar</h4>
+          <ul>
+            <li><a href="https://halflow.info" target="_blank">Halflow.info</a></li>
+            <li><a href="#hakkimizda">Hakkımızda</a></li>
+            <li><a href="#iletisim">İletişim</a></li>
+            <li><a href="mailto:info@halitautomation.com">E-posta</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Halit Automation. Tüm hakları saklıdır.</p>
+        <p>info@halitautomation.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.style.borderBottomColor = window.scrollY > 50 ? 'rgba(201,168,76,0.15)' : 'rgba(255,255,255,0.06)';
+    });
+
+    // Form handler
+    function handleForm(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.btn-form');
+      btn.textContent = '✓ Mesajınız alındı!';
+      btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+      setTimeout(() => {
+        btn.textContent = 'Ücretsiz Danışma İste →';
+        btn.style.background = '';
+        e.target.reset();
+      }, 3000);
     }
-  });
-}, { threshold: 0.1 });
 
-document.querySelectorAll('.fi').forEach(function(el) { observer.observe(el); });
-</script>
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.service-card, .process-step, .testi-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+  </script>
 </body>
 </html>
