@@ -155,37 +155,73 @@
     .center .divider { margin: 16px auto; }
 
     /* ── HİZMETLER ── */
-    .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    @media(max-width:900px){ .services-grid { grid-template-columns: repeat(2,1fr); } }
+    @media(max-width:580px){ .services-grid { grid-template-columns: 1fr; } }
+
     .service-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px;
-      transition: all 0.3s;
+      border-radius: 20px;
+      padding: 36px 32px 28px;
+      transition: all 0.35s cubic-bezier(.22,.68,0,1.2);
       position: relative;
       overflow: hidden;
+      opacity: 0;
+      transform: translateY(32px);
     }
+    .service-card.visible { opacity: 1; transform: translateY(0); }
     .service-card::before {
       content: '';
       position: absolute; top: 0; left: 0; right: 0; height: 2px;
       background: linear-gradient(90deg, var(--gold), var(--gold2));
-      opacity: 0;
-      transition: opacity 0.3s;
+      opacity: 0; transition: opacity 0.3s;
     }
-    .service-card:hover { border-color: var(--gold-border); background: var(--card2); transform: translateY(-4px); }
+    .service-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(201,168,76,0.05) 0%, transparent 70%);
+      opacity: 0; transition: opacity 0.3s; pointer-events: none;
+    }
+    .service-card:hover { border-color: var(--gold-border); background: var(--card2); transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(201,168,76,0.06); }
     .service-card:hover::before { opacity: 1; }
+    .service-card:hover::after { opacity: 1; }
+
+    .sc-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
     .service-icon {
-      width: 52px; height: 52px;
+      width: 54px; height: 54px;
       background: var(--gold-glow);
       border: 1px solid var(--gold-border);
-      border-radius: 12px;
+      border-radius: 14px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem;
-      margin-bottom: 20px;
+      font-size: 1.5rem;
     }
-    .service-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
-    .service-card p { font-size: 0.85rem; color: var(--text2); line-height: 1.7; margin-bottom: 16px; }
-    .service-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .sc-num {
+      font-size: 2.8rem; font-weight: 900; letter-spacing: -0.05em;
+      color: rgba(201,168,76,0.08); line-height: 1;
+      transition: color 0.3s;
+    }
+    .service-card:hover .sc-num { color: rgba(201,168,76,0.15); }
+
+    .service-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.02em; }
+    .service-card p { font-size: 0.83rem; color: var(--text2); line-height: 1.75; margin-bottom: 20px; }
+
+    .sc-divider { height: 1px; background: var(--border); margin-bottom: 16px; }
+
+    .sc-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .sc-tool {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 0.68rem; font-weight: 700;
+      padding: 4px 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text2);
+      transition: all 0.2s;
+    }
+    .sc-tool svg { width: 12px; height: 12px; flex-shrink: 0; }
+    .service-card:hover .sc-tool { border-color: var(--gold-border); color: var(--text); }
+
     .tag {
       font-size: 0.7rem; font-weight: 600;
       padding: 4px 10px;
@@ -460,67 +496,102 @@
         <p class="sec-sub">Her işletmenin ihtiyacı farklıdır. Size özel otomasyon çözümleri tasarlayıp hayata geçiriyoruz.</p>
       </div>
       <div class="services-grid">
+
         <div class="service-card">
-          <div class="service-icon">🌐</div>
+          <div class="sc-top">
+            <div class="service-icon">🌐</div>
+            <span class="sc-num">01</span>
+          </div>
           <h3>Web Sitesi & Dijital Altyapı</h3>
           <p>Fikrinden yayına kadar her şeyi biz hallederiz. Tasarım, kodlama, domain, hosting, güvenli veritabanı — KVKK uyumlu, anahtar teslim dijital varlık.</p>
-          <div class="service-tags">
-            <span class="tag">Landing Page</span>
-            <span class="tag">Supabase</span>
-            <span class="tag">KVKK</span>
-            <span class="tag">Hosting</span>
+          <div class="sc-divider"></div>
+          <div class="sc-tools">
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#3ECF8E"><circle cx="12" cy="12" r="10"/><text x="6" y="16" font-size="9" fill="#fff" font-weight="bold">SB</text></svg>Supabase</span>
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#4285F4"><rect width="24" height="24" rx="4"/><text x="4" y="17" font-size="11" fill="#fff" font-weight="bold">V</text></svg>Vercel</span>
+            <span class="sc-tool">🔒 KVKK</span>
+            <span class="sc-tool">⚡ Hızlı Teslimat</span>
           </div>
         </div>
+
         <div class="service-card">
-          <div class="service-icon">⚙️</div>
+          <div class="sc-top">
+            <div class="service-icon">⚙️</div>
+            <span class="sc-num">02</span>
+          </div>
           <h3>İş Akışı Otomasyonu</h3>
           <p>Tekrar eden işleri bir daha yapmayın. Fatura, bildirim, rapor, sipariş takibi — n8n ile kuruyoruz, siz sadece sonucu görürsünüz.</p>
-          <div class="service-tags">
-            <span class="tag">n8n</span>
-            <span class="tag">Make</span>
-            <span class="tag">API Entegrasyon</span>
+          <div class="sc-divider"></div>
+          <div class="sc-tools">
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#EA4B00"><circle cx="12" cy="12" r="10"/><text x="6.5" y="16" font-size="9" fill="#fff" font-weight="bold">n8n</text></svg>n8n</span>
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#6D00CC"><rect width="24" height="24" rx="4"/><text x="4" y="16" font-size="9" fill="#fff" font-weight="bold">Make</text></svg>Make</span>
+            <span class="sc-tool">🔗 API</span>
+            <span class="sc-tool">📧 Gmail / Sheets</span>
           </div>
         </div>
+
         <div class="service-card">
-          <div class="service-icon">🎙️</div>
+          <div class="sc-top">
+            <div class="service-icon">🎙️</div>
+            <span class="sc-num">03</span>
+          </div>
           <h3>AI Asistan & Sesli Ajan</h3>
           <p>WhatsApp'ta mesaj yanıtlayan, telefonu açan, randevu alan yapay zeka. Müşteriniz gerçek biriyle konuştuğunu sanar — ama 7/24 çalışır, yorulmaz.</p>
-          <div class="service-tags">
-            <span class="tag">WhatsApp Bot</span>
-            <span class="tag">Sesli Ajan</span>
-            <span class="tag">Chatbot</span>
+          <div class="sc-divider"></div>
+          <div class="sc-tools">
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#25D366"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.06L2 22l5.09-1.34C8.47 21.52 10.19 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>WhatsApp</span>
+            <span class="sc-tool">🧠 Claude / GPT</span>
+            <span class="sc-tool">🎙️ Sesli Bot</span>
+            <span class="sc-tool">💬 Telegram</span>
           </div>
         </div>
+
         <div class="service-card">
-          <div class="service-icon">📈</div>
+          <div class="sc-top">
+            <div class="service-icon">📈</div>
+            <span class="sc-num">04</span>
+          </div>
           <h3>Satış & CRM Yönetimi</h3>
           <p>Potansiyel müşterileri otomatik takip edin, tekliflerinizi zamanında gönderin, satış sürecinizi baştan sona otomatize edin. Daha az uğraş, daha çok satış.</p>
-          <div class="service-tags">
-            <span class="tag">CRM</span>
-            <span class="tag">Lead Takibi</span>
-            <span class="tag">Otomatik Teklif</span>
+          <div class="sc-divider"></div>
+          <div class="sc-tools">
+            <span class="sc-tool">📊 CRM Pipeline</span>
+            <span class="sc-tool">📩 Otomatik E-posta</span>
+            <span class="sc-tool">🎯 Lead Skoring</span>
+            <span class="sc-tool">📋 Teklif Otomasyonu</span>
           </div>
         </div>
+
         <div class="service-card">
-          <div class="service-icon">🎯</div>
+          <div class="sc-top">
+            <div class="service-icon">🎯</div>
+            <span class="sc-num">05</span>
+          </div>
           <h3>Reklam & Büyüme</h3>
           <p>Instagram, Facebook ve Google'da doğru kişiye doğru reklam. Bütçenizi boşa harcamadan müşteriye dönüştürüyoruz. Satış odaklı kampanyalar.</p>
-          <div class="service-tags">
-            <span class="tag">Meta Ads</span>
-            <span class="tag">Google Ads</span>
-            <span class="tag">Retargeting</span>
+          <div class="sc-divider"></div>
+          <div class="sc-tools">
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.41 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.88v2.26h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>Meta Ads</span>
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="#4285F4"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Google Ads</span>
+            <span class="sc-tool">🔄 Retargeting</span>
           </div>
         </div>
+
         <div class="service-card">
-          <div class="service-icon">🎬</div>
+          <div class="sc-top">
+            <div class="service-icon">🎬</div>
+            <span class="sc-num">06</span>
+          </div>
           <h3>İçerik & Görünürlük</h3>
           <p>UGC video etkisiyle satış yapan içerikler, AI avatar ile markanızı anlatan Reels ve TikTok'lar. Stüdyo gerekmez, algoritma sever.</p>
-          <div class="service-tags">
-            <span class="tag">UGC Video</span>
-            <span class="tag">AI Avatar</span>
-            <span class="tag">Reel / TikTok</span>
+          <div class="sc-divider"></div>
+          <div class="sc-tools">
+            <span class="sc-tool">🎭 AI Avatar</span>
+            <span class="sc-tool">📱 UGC Video</span>
+            <span class="sc-tool"><svg viewBox="0 0 24 24" fill="url(#ig)"><defs><linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f09433"/><stop offset="50%" stop-color="#e6683c"/><stop offset="100%" stop-color="#bc1888"/></linearGradient></defs><rect width="24" height="24" rx="6"/><rect x="6" y="6" width="12" height="12" rx="3" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="12" cy="12" r="3" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="17" cy="7" r="1" fill="#fff"/></svg>Reels</span>
+            <span class="sc-tool">🎵 TikTok</span>
           </div>
         </div>
+
       </div>
     </div>
   </section>
@@ -824,6 +895,21 @@
       }, 3000);
     }
 
+    // Service cards stagger animation
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          const cards = e.target.querySelectorAll('.service-card');
+          cards.forEach((card, i) => {
+            setTimeout(() => card.classList.add('visible'), i * 100);
+          });
+          cardObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    const sg = document.querySelector('.services-grid');
+    if (sg) cardObserver.observe(sg);
+
     // Scroll animations
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
@@ -834,7 +920,7 @@
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.service-card, .process-step, .testi-card').forEach(el => {
+    document.querySelectorAll('.process-step, .testi-card').forEach(el => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(20px)';
       el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
